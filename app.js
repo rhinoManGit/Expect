@@ -57,11 +57,12 @@ app.use(function(err, req, res, next) {
         log.countReset(label);
     }*/
 
-    log.error(`[NEXT]: ErrorID: ${err.log_uuid} \n ${err.stack}`);
+    log.warn(`[NEXT]: ErrorID: ${err.log_uuid}`);
+    log.error(`${err.stack}`);
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error', {message:'', error: err});
+    res.render('common/error', {message:'', error: err});
 });
 
 module.exports = app;

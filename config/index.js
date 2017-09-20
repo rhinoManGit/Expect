@@ -10,3 +10,12 @@ exports.getConfig = function(key){
 
     return config[key];
 }
+
+exports.config = function(){
+
+    var env = process.env.rhinoHorn || 'dev';
+
+    var _config = require('./config_' + env);
+
+    return _config;
+}

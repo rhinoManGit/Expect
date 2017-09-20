@@ -41,7 +41,7 @@ function mvc(req, res, next) {
         handle404(req, res, next, e);
         return;
     }
-
+    console.log(controllerFiles, './../controllers/' + controller)
     try {
         // require的缓存机制使􀚥􁊻有􀚼􁅃􀙒是阻塞的
         module = require('./../controllers/' + controller);
