@@ -41,21 +41,21 @@ function mvc(req, res, next) {
         handle404(req, res, next, e);
         return;
     }
-    console.log(controllerFiles, './../controllers/' + controller)
+
     try {
         // require的缓存机制使􀚥􁊻有􀚼􁅃􀙒是阻塞的
         module = require('./../controllers/' + controller);
     } catch (ex) {
-        handle500(req, res, next);
+        handle500(req, res, next, ex);
         return;
     }
 
     var method = module[action];
 
-    if (method) {
+    try {
         method.apply(null, [req, res, next].concat(args));
-    } else {
-        handle500(req, res, next);
+    } catch (ex) {
+        handle500(req, res, next, ex);
     }
 }
 

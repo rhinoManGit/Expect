@@ -1,0 +1,40 @@
+/* CSS reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,section { margin:0; padding:0;box-sizing:border-box;-moz-box-sizing:border-box; -webkit-box-sizing:border-box;
+}
+table { border-collapse:collapse;border-spacing:0px;}
+fieldset,img { border:0;}
+address,caption,cite,code,dfn,em,strong,th,var { font-style:normal; font-weight:normal;}
+ol,ul { list-style:none;}
+caption,th { text-align:left;}
+h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal;}
+q:before,q:after { content:'';}
+abbr,acronym { border:0;}
+/* links */
+a{ text-decoration:none;outline:none;}
+a:hover{ text-decoration:underline;}
+.clearfix:after{content:""; display:block; clear:both; visibility:hidden; height:0; font-size:0;}
+.clearfix{ zoom:1;}   /* IE  < 8 */
+.clear{ clear:both;}
+button{ cursor:pointer; border:0; padding:0;font-style:normal;font-family:"微软雅黑";}
+textarea{ overflow:auto; resize:none;}
+.hidden{ display:none;}
+body,html,.wrap{background: #f2f2f2;font-family:"微软雅黑" !important;-webkit-overflow-scrolling: touch;}
+i,span,p{display: inline-block;box-sizing:border-box;}
+
+/*全局通知使用css开始*/
+.wrap_top .top_one .logo_box .line {
+    float: right;
+    width: 1px;
+    height: 30px;
+    background-color: #5ea0ff;
+    margin: 13px 10px 13px 0; }
+.wrap_top .top_one .logo_box .project_notice_box {
+    position: relative;
+    float: right;
+    height: 100%;
+    width: 50px;
+    padding: 16px;
+    padding-top: 18px;
+    position: relative;
+    /*通知*/
+    /*通知弹层*/ }

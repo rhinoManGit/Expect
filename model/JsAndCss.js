@@ -1,25 +1,20 @@
 /**
  * Created by Administrator on 2017/9/20 0020.
  */
-var config  = require('./../config/');
 var version = require('./../config/cacheVersion.json');
 
 function JsAndCss(){
-
-    // 所有的model都继承config
-    this._config = config.config();
-
-    this.getCss();
-    this.getJs();
-    this.getCommon();
+    getCss.call(this);
+    getJs.call(this);
+    getCommon.call(this);
 }
 
-JsAndCss.prototype.getCss = function(){
+function getCss(){
 
     var env = this._config['env'];
     var tpl = {
-        pro: 'app/output/css/',
-        test: 'app/dest/css/'
+        pro: '/app/output/css/',
+        test: '/app/dest/css/'
     }
 
     var name = env === 'pro'? version['css'][this.pageName] : this.pageName + '.css';
@@ -27,12 +22,12 @@ JsAndCss.prototype.getCss = function(){
     this.link = (tpl[env] || tpl['test']) + name;
 }
 
-JsAndCss.prototype.getJs = function(){
+function getJs(){
 
     var env = this._config['env'];
     var tpl = {
-        pro: 'app/output/js/',
-        test: 'app/dest/js/'
+        pro: '/app/output/js/',
+        test: '/app/dest/js/'
     }
 
     var name = env === 'pro'? version['js'][this.pageName] : this.pageName + '.js';
@@ -40,7 +35,7 @@ JsAndCss.prototype.getJs = function(){
     this.script = (tpl[env] || tpl['test']) + name;
 }
 
-JsAndCss.prototype.getCommon = function(){
+function getCommon(){
 
 }
 

@@ -105,7 +105,6 @@ function upload(cfg, callback){
         });
 }
 
-
 function buildCss(styleSrc){
     gulp.src(styleSrc, {client: './'})
         .pipe(plumber({errorHandler: onError}))
@@ -142,7 +141,6 @@ function tmodjsTask(callback){
     tmod.watch();
     callback();
 }
-
 
 // 根据变动生成css与js
 function buildCssAndJs(){

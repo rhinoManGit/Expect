@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<style>
+    .header{
+        height: 54px;
+        margin: auto;
+        background: #347de8;
+        overflow: hidden;
+    }
+    .header-content{
+        height: 100%;
+        background: #347de8;
+        width: 1100px;
+        margin: auto;
+    }
+    .header-content-logo{
+        background: url(/app/img/head_img.png) no-repeat center;
+        width: 123px;
+        height: 100%;
+        background-size: 123px 32px;
+        float: left;
+        margin-right: 20px;
+    }
+    ul,li{
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+    .header-content li{
+        float: left;
+    }
+    .header-content li a{
+        padding: 16px 15px 17px 15px;
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .header-content li a.visited{
+        font-weight: 700;
+        background: #195ec1;
+    }
+    .header-content li a:not(.visited):hover{
+        background: #5da0ff;
+    }
+</style>
+<div class="header">
+    <div class="header-content">
+        <i class="header-content-logo"></i>
+        <ul>
+            <li><a href="">首页</a></li>
+            <li><a href="">总体成绩分析</a></li>
+            <li><a href="" class="visited">数据报表</a></li>
+        </ul>
+    </div>
+</div>

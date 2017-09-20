@@ -1,16 +1,22 @@
 /**
  * Created by Administrator on 2017/9/20 0020.
  */
-var Common = require('./JsAndCss');
+var JsAndCss = require('./JsAndCss');
+var Common   = require('./Common');
 
 function Report(obj){
 
-    this['title']     = obj.title || '±¨±íÖĞĞÄ';
+    this['title']     = obj.title || 'æŠ¥è¡¨ä¸­å¿ƒ';
 
     this['pageName']  = obj.pageName || 'report';
+
+    /*
+    * æ·»åŠ åœ°å€å¼•ç”¨
+    * */
+    JsAndCss.call(this);
 }
 
-// ¼Ì³Ğconfig
+// ç»§æ‰¿å…¬å…±å±æ€§: config
 Report.prototype = new Common();
 
 module.exports = Report;

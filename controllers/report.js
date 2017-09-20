@@ -1,6 +1,6 @@
 /**
  * Created by Administrator on 2017/9/18 0018.
- * ±¨±íÖĞĞÄ
+ * æŠ¥è¡¨ä¸­å¿ƒ
  */
 var ReportModel = require('./../model/Report');
 
@@ -12,7 +12,7 @@ Action.index = function(req, res, next){
 
     var test = {
         pageName: 'report',
-        title: '¼«¿Î´óÊı¾İ'
+        title: 'æè¯¾å¤§æ•°æ®'
     }
 
     var reportModel = new ReportModel(test);
