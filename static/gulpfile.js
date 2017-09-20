@@ -35,7 +35,7 @@ var tmodjs = require('tmodjs');
 
 var tpl = {
     name: 'rhino',
-    imgRoot:"//file.40017.cn/feresource/gny-img/touch/",
+    imgRoot:"",
     illegal: /alert\(/g,
     to: 'wd14931@ly.com'
 };
