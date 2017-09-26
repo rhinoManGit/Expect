@@ -8,6 +8,6 @@ module.exports = {
     "db_us"  : "cn_mis_read",
     "db_ps"  : "DqlReuCbHjwbvf6CTov",
     "db_DB"  : "fzmis",
-    "Email_Authorization_user": "zhuxuebin@fclassroom.com",
-    "Email_Authorization_code": "eZ5s7MpWonccEGYe"
+    "Email_Authorization_user": "wangduo@fclassroom.com",
+    "Email_Authorization_code": "LH858Z98TQmeEjd3"
 }

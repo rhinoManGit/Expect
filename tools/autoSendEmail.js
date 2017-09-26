@@ -41,9 +41,9 @@ var getAgentHandle = async function () {
         /*
          * 发送邮件
          * */
-        var aToAddresses = [/*'mayuwei@fclassroom.com','info@fclassroom.com','pujiongye@fclassroom.com',*/'wangduo@fclassroom.com'];
+        var aToAddresses = ['mayuwei@fclassroom.com','info@fclassroom.com','pujiongye@fclassroom.com'];
         // 抄送
-        var aCcAddresses = [/*'wangwei@fclassroom.com',*/'wangduo@fclassroom.com'];
+        var aCcAddresses = ['wangwei@fclassroom.com'];
 
         var account = {
             host   : 'smtp.exmail.qq.com',
@@ -80,7 +80,7 @@ var getAgentHandle = async function () {
  * 定时获取录入代理的信息
  * 首先计算多久到达10点，然后24小时一次
  * */
-var current = new Date();
+var current   = new Date();
 var firstTime = + new Date(current.getFullYear() + '/' + (current.getMonth()-(-1))+'/'+current.getDate()+ ' 10:00:00');
 
 var firstTick = firstTime - (+current);
