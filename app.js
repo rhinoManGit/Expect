@@ -10,7 +10,7 @@ var log          = require('./tools/logger');
 var util         = require('./tools/utils');
 var routes       = require('./routes/transitVessel');
 
-var autoSendEmail= require('./tools/autoSendEmail');
+var ticking      = require('./middlewares/ticking');
 
 var app = express();
 
@@ -35,11 +35,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(routes);
 
-/*
-* 定时获取录入代理的信息
-* 首先计算多久到达10点，然后24小时一次
-* */
-autoSendEmail();
+// start timed task
+ticking();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
