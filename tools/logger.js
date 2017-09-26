@@ -54,22 +54,39 @@ function getStream(key){
 }
 
 function Log(out, err){
-    this.logger = new Console(out, err);
+    this.logger        = new Console(out, err);
+    this.asyncConsole  = config.getConfig('env') === 'pro'? true : false;
 }
 
 Log.prototype.log = function(str){
+
+    if(this.asyncConsole)
+        console.log(style.cyan[0] + str + style.cyan[1]);
+
     return this.logger.log.call(null, style.cyan[0] + str + style.cyan[1]);
 }
 
 Log.prototype.info = function(str){
-        return this.logger.info.call(null, style.white[0] + str + style.white[1]);
+
+    if(this.asyncConsole)
+        console.log(style.white[0] + str + style.white[1]);
+
+    return this.logger.info.call(null, style.white[0] + str + style.white[1]);
 }
 
 Log.prototype.warn = function(str){
+
+    if(this.asyncConsole)
+        console.log(style.yellow[0] + str + style.yellow[1]);
+
     return this.logger.warn.call(null, style.yellow[0] + str + style.yellow[1]);
 }
 
 Log.prototype.error = function(str){
+
+    if(this.asyncConsole)
+        console.log(style.red[0] + str + style.red[1]);
+
     return this.logger.error.call(null, style.red[0] + str + style.red[1]);
 }
 

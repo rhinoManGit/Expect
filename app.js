@@ -10,6 +10,8 @@ var log          = require('./tools/logger');
 var util         = require('./tools/utils');
 var routes       = require('./routes/transitVessel');
 
+var autoSendEmail= require('./tools/autoSendEmail');
+
 var app = express();
 
 // view engine setup
@@ -33,6 +35,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(routes);
 
+/*
+* 定时获取录入代理的信息
+* 首先计算多久到达10点，然后24小时一次
+* */
+autoSendEmail();
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
 
@@ -44,18 +52,6 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-
-    /*
-    * 如果一条错误信息达到一定数量或者一定时间则考虑发送邮件
-    * */
-
-    /*if(count > 10){
-
-        // 发送邮件，短信通知 todo
-        log.warn('send!!');
-        // 清除
-        log.countReset(label);
-    }*/
 
     log.warn(`[NEXT]: ErrorID: ${err.log_uuid}`);
     log.error(`${err.stack}`);

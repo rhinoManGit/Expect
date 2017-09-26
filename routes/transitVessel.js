@@ -25,7 +25,12 @@ function mvc(req, res, next) {
     var a = paths.pop().match(/\.(.*)?/g);
 
     if(staticFix.indexOf(a && a.length>0? a[0] : '') !== -1){
-        handle404(req, res, next);
+
+        var err    = new Error(pathname + ' No Find!');
+
+        err.status = 404;
+
+        handle404(req, res, next, err);
         return;
     }
 

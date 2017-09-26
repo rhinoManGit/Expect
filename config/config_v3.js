@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/9/18 0018.
  */
 module.exports = {
-    "env"    : "dev",
+    'env'    : 'v3',
     "db_host": "121.42.25.134",
     "db_port": "3315",
     "db_us"  : "cn_mis_read",

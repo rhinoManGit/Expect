@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/apps" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/report.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/log/stderr.log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/log/stdout.log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/Common.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/JsAndCss.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/Report.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/static/app/dest/css/report.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/static/app/dest/js/report.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/JDBC.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/autoSendEmail.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/sendEmail.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/report.ejs" charset="UTF-8" />
   </component>
 </project>
