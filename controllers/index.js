@@ -68,9 +68,9 @@ Action.getagent = function(req, res, next){
             /*
             * 发送邮件
             * */
-            var aToAddresses = [/*'mayuwei@fclassroom.com','info@fclassroom.com','pujiongye@fclassroom.com',*/'wangduo@fclassroom.com'];
+            var aToAddresses = ['mayuwei@fclassroom.com','info@fclassroom.com','pujiongye@fclassroom.com'];
             // 抄送
-            var aCcAddresses = [/*'wangwei@fclassroom.com',*/'wangduo@fclassroom.com'];
+            var aCcAddresses = ['wangwei@fclassroom.com'];
 
             var account = {
                 host   : 'smtp.exmail.qq.com',
