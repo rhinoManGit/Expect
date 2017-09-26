@@ -46,7 +46,7 @@ Action.getagent = function(req, res, next){
             * 写入Excel
             * */
             var workbook = new Excel.stream.xlsx.WorkbookWriter({
-                filename: './cache/agentlist-' + sDate + '.xlsx'
+                filename: './cache/agentlist.xlsx'
             });
 
             var worksheet = workbook.addWorksheet('Sheet');
@@ -86,7 +86,7 @@ Action.getagent = function(req, res, next){
                     [
                         {
                             filename: sDate + '.xlsx',
-                            path: './cache/agentlist-' + sDate + '.xlsx' // stream this file
+                            path: './cache/agentlist.xlsx' // stream this file
                         }
                     ]
                 }
