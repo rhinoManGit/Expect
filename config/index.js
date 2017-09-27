@@ -4,7 +4,7 @@
 
 exports.getConfig = function(key){
 
-    var env = process.env['node_env'] || 'pro';
+    var env = process.env['node_env'] || 'dev';
 
     var config = require('./config_' + env);
 
@@ -13,7 +13,7 @@ exports.getConfig = function(key){
 
 exports.config = function(){
 
-    var env = process.env['node_env'] || 'pro';
+    var env = process.env['node_env'] || 'dev';
 
     var _config = require('./config_' + env);
 
