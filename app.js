@@ -6,10 +6,12 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 
+// 日志
 var log          = require('./tools/logger');
-var util         = require('./tools/utils');
+// 路由
 var routes       = require('./routes/transitVessel');
-
+// 中间件
+var assignId     = require('./middlewares/assignId');
 var ticking      = require('./middlewares/ticking');
 
 var app = express();
@@ -24,7 +26,7 @@ app.set('view engine', 'ejs');
 morgan.token('id', function getId (req) {
     return req.log_uuid
 })
-app.use(util.assignId);
+app.use(assignId);
 
 app.use(morgan(':status :method :url :response-time :date[web]'));
 

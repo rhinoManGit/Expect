@@ -37,13 +37,13 @@ const style = {
 var config = require('./../config/');
 
 /*
-* key: stdout, stderr
-* */
+ * key: stdout, stderr
+ * */
 function getStream(key){
 
     /*
-    * ÿ��һ����־�ļ�
-    * */
+     * 每周一个日志文件
+     * */
     var env      = config.getConfig('env'),
         dCurrent = new Date,
         dWeek    = parseInt(dCurrent.getDate()/7, 10),
@@ -102,6 +102,9 @@ Log.prototype.error = function(str){
     return this.logger.error.call(null, err);
 }
 
+/*
+ * 格式化错误日志
+ * */
 Log.prototype.format = function (msg) {
 
     var ret = '';
@@ -135,8 +138,8 @@ Log.prototype.format = function (msg) {
 }
 
 /*
-* label string
-* */
+ * label string
+ * */
 Log.prototype.count = function(label){
     return this.logger.count.call(null, label);
 }

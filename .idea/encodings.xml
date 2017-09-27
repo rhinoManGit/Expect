@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/log/stderr.log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/log/stdout-[9-13].log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/log/stdout.log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/middlewares/assignId.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/middlewares/ticking.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/Common.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/JsAndCss.js" charset="UTF-8" />
@@ -17,7 +18,9 @@
     <file url="file://$PROJECT_DIR$/static/app/dest/js/report.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tools/JDBC.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tools/autoSendEmail.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/logger.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tools/sendEmail.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tools/utils.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/report.ejs" charset="UTF-8" />
   </component>
 </project>
