@@ -24,9 +24,10 @@ app.set('view engine', 'ejs');
 morgan.token('id', function getId (req) {
     return req.log_uuid
 })
-
 app.use(util.assignId);
-app.use(morgan(':status :method :url :response-time :date[web]'))
+
+app.use(morgan(':status :method :url :response-time :date[web]'));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
@@ -51,7 +52,9 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
 
     log.warn(`[NEXT]: ErrorID: ${err.log_uuid}`);
-    log.error(`${err.stack}`);
+
+    // 写入日志
+    log.error(err);
 
     // render the error page
     res.status(err.status || 500);

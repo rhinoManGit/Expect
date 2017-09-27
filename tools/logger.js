@@ -1,8 +1,12 @@
 /**
  * Created by Administrator on 2017/9/19 0019.
  */
+var util          = require('util');
+var moment        = require('moment');
 var fs            = require('fs');
+var os            = require('os');
 var Console       = require('console').Console;
+
 const style = {
     'bold'          : ['\x1B[1m',  '\x1B[22m'],
     'italic'        : ['\x1B[3m',  '\x1B[23m'],
@@ -37,12 +41,18 @@ var config = require('./../config/');
 * */
 function getStream(key){
 
-    var env = config.getConfig('env');
+    /*
+    * 每周一个日志文件
+    * */
+    var env      = config.getConfig('env'),
+        dCurrent = new Date,
+        dWeek    = parseInt(dCurrent.getDate()/7, 10),
+        prefix   = dCurrent.getFullYear()%1000 + '-' + (dCurrent.getMonth() + 1) + '-' + dWeek + '-';
 
     var stream = {
         pro: {
-            output: fs.createWriteStream('./log/stdout.log'),
-            stderr: fs.createWriteStream('./log/stderr.log')
+            output: fs.createWriteStream('./log/' + prefix + 'stdout.log'),
+            stderr: fs.createWriteStream('./log/' + prefix + 'stderr.log')
         },
         dev: {
             output: process.stdout,
@@ -84,10 +94,44 @@ Log.prototype.warn = function(str){
 
 Log.prototype.error = function(str){
 
-    if(this.asyncConsole)
-        console.log(style.red[0] + str + style.red[1]);
+    var err = this.format(str);
 
-    return this.logger.error.call(null, style.red[0] + str + style.red[1]);
+    if(this.asyncConsole)
+        console.log(style.red[0] + err + style.red[1]);
+
+    return this.logger.error.call(null, err);
+}
+
+Log.prototype.format = function (msg) {
+
+    var ret = '';
+
+    if (!msg) {
+        return ret;
+    }
+
+    var date = moment();
+    var time = date.format('YYYY-MM-DD HH:mm:ss.SSS');
+
+    if (msg instanceof Error) {
+        var err = {
+            name: msg.name,
+            data: msg.data
+        };
+        err.stack = msg.stack;
+        ret = util.format('%s %s: %s\nHost: %s\nData: %j\n%s\n\n',
+            time,
+            err.name,
+            err.stack,
+            os.hostname(),
+            err.data,
+            time
+        );
+    } else {
+        ret = time + ' ' + util.format.apply(util, arguments) + '\n';
+    }
+
+    return ret;
 }
 
 /*
