@@ -9,5 +9,5 @@ module.exports = {
     "db_ps"  : "jike2016_mis_passwd",
     "db_DB"  : "fzmis",
     "Email_Authorization_user": "wangduo@fclassroom.com",
-    "Email_Authorization_code": "LH858Z98TQmeEjd3"
+    "Email_Authorization_code": "LH858Z98TQmesEjd3"
 }
