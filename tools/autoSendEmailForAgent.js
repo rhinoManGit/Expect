@@ -42,9 +42,10 @@ var getAgentHandle = async function () {
          * 发送邮件
          * */
         var aToAddresses = ['mayuwei@fclassroom.com','info@fclassroom.com','pujiongye@fclassroom.com'];
+    
         // 抄送
         var aCcAddresses = ['wangwei@fclassroom.com'];
-
+            
         var account = {
             host   : 'smtp.exmail.qq.com',
             user   : config.Email_Authorization_user,

@@ -3,12 +3,14 @@
  * 所有与请求无关的定时任务
  *
  */
-var autoSendEmail= require('./../tools/autoSendEmail');
+var autoSendEmailForAgent= require('./../tools/autoSendEmailForAgent');
+var autoSendEmailForExam= require('./../tools/autoSendEmailForExam');
 
 function Ticking(){
 
     // 定时发送邮件
-    autoSendEmail();
+    autoSendEmailForAgent();
+    autoSendEmailForExam();
 }
 
 module.exports = Ticking;

@@ -38,9 +38,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(routes);
 
-// start timed task
-//ticking();
-
+// start timed task  
+ticking();    
+    
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
 
@@ -56,7 +56,7 @@ app.use(function(err, req, res, next) {
     log.warn(`[NEXT]: ErrorID: ${err.log_uuid}`);
 
     // 写入日志
-    log.error(err);
+    log.error(err);   
 
     // render the error page
     res.status(err.status || 500);
@@ -64,3 +64,5 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+

@@ -3,11 +3,11 @@
  */
 module.exports = {
     "env"    : "dev",
-    "db_host": "121.42.25.134",
-    "db_port": "3315",
-    "db_us"  : "cn_mis_read",
-    "db_ps"  : "DqlReuCbHjwbvf6CTov",
+    "db_host": "db-dev.fclassroom.net",
+    "db_port": "3306",
+    "db_us"  : "jike2016_mis",
+    "db_ps"  : "jike2016_mis_passwd",
     "db_DB"  : "fzmis",
     "Email_Authorization_user": "wangduo@fclassroom.com",
-    "Email_Authorization_code": "LH858Z9TQmeEjd3"
+    "Email_Authorization_code": "LH858Z98TQmeEjd3"
 }

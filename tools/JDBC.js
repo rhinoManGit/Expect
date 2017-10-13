@@ -28,6 +28,7 @@ that.find = function(query, cb){
 
     connection.query(query, function (error, results, fields) {
 
+        console.log(error)
         if (error) throw error;
 
         cb(error, results);
