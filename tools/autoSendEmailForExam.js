@@ -6,6 +6,7 @@ var sendEmail = require('./sendEmail');
 var logger    = require('./logger');
 var config    = require('./../config').config();
 var Excel     = require('exceljs');
+var sName     = '联考：';
 
 var getAgentHandle = async function () {
 
@@ -44,9 +45,9 @@ var getAgentHandle = async function () {
          * 发送邮件
          * */
         var aToAddresses = ['cuihaihe@fclassroom.com'];
-        // 抄送               
+        // 抄送
         var aCcAddresses = ['lihaiyang@fclassroom.com','wanglichuan@fclassroom.com','louyuting@fclassroom.com'];
-            
+
         var account = {
             host   : 'smtp.exmail.qq.com',
             user   : config.Email_Authorization_user,
@@ -93,14 +94,14 @@ if(firstTick < 0){
     firstTick += nextTick;
 }
 
-logger.log(`距离下次发送时间：${parseInt(firstTick/(1000*60*60))}小时,${(firstTick%(1000*60*60))/(60*1000)}分钟}`);
+logger.log(`${sName}距离下次发送时间：${parseInt(firstTick/(1000*60*60))}小时,${(firstTick%(1000*60*60))/(60*1000)}分钟}`);
 
 function sendHandle(){
 
     // 发送
     getAgentHandle();
 
-    logger.log(`距离下次发送时间：${nextTick/(1000*60*60)}小时}`);
+    logger.log(`${sName}距离下次发送时间：${nextTick/(1000*60*60)}小时}`);
 
     setTimeout(function(){
         sendHandle();
@@ -111,7 +112,7 @@ function startTick(){
 
     setTimeout(function(){
 
-        logger.log(`首次发送时间：${new Date()}`);
+        logger.log(`${sName}首次发送时间：${new Date()}`);
 
         sendHandle();
     }, firstTick);
