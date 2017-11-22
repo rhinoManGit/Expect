@@ -13,6 +13,10 @@ var getAgentHandle = async function () {
     try{
         var data = await server.getExamList();
 
+        if(!data.length){
+            return;
+        }
+
         var preDate      = (new Date(+new Date - 24 * 60 * 60 * 1000)),
             sDate        = '[' + preDate.getFullYear() + '-' + (preDate.getMonth() - (-1)) + '-' + preDate.getDate() + ']';
 
