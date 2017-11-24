@@ -18,23 +18,8 @@ a:hover{ text-decoration:underline;}
 button{ cursor:pointer; border:0; padding:0;font-style:normal;font-family:"微软雅黑";}
 textarea{ overflow:auto; resize:none;}
 .hidden{ display:none;}
-body,html,.wrap{background: #f2f2f2;font-family:"微软雅黑" !important;-webkit-overflow-scrolling: touch;}
-i,span,p{display: inline-block;box-sizing:border-box;}
-
-/*全局通知使用css开始*/
-.wrap_top .top_one .logo_box .line {
-    float: right;
-    width: 1px;
-    height: 30px;
-    background-color: #5ea0ff;
-    margin: 13px 10px 13px 0; }
-.wrap_top .top_one .logo_box .project_notice_box {
-    position: relative;
-    float: right;
-    height: 100%;
-    width: 50px;
-    padding: 16px;
-    padding-top: 18px;
-    position: relative;
-    /*通知*/
-    /*通知弹层*/ }
+body,html,.wrap{
+    font-family: "Open Sans","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,SimSun,sans-serif;
+    line-height: 1.6;
+}
+i,span{box-sizing:border-box;}

@@ -1,10 +1,11 @@
 /**
  * Created by Administrator on 2017/9/18 0018.
  */
-var server    = require('./../service/');
-var sendEmail = require('./../tools/sendEmail');
-var config    = require('./../config').config();
-var Excel     = require('exceljs');
+var server      = require('./../service/');
+var sendEmail   = require('./../tools/sendEmail');
+var config      = require('./../config').config();
+var Excel       = require('exceljs');
+var CodeStandardModel = require('./../model/CodeStandard');
 
 function Index(){}
 
@@ -106,4 +107,18 @@ Action.getagent = function(req, res, next){
     getAgentHandle();
 }
 
+/*
+* 代码规范
+* */
+Action.codestandard = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard', codeStandardModel);
+}
 module.exports = new Index();

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- layout -->
+    <%-include("common/layout_header")%>
+
+    <link rel='stylesheet' href='<%= link %>' />
+</head>
+<body>
+<!-- 公共头部 -->
+<%-include("common/header")%>
+<div class="wrapper">
+    <h1>文件命名：</h1>
+    <p>html文件命名, 语义化，全小写，中划线连接。eg. api-demo.html</p>
+    <p>css文件名, 语义化，全小写，中划线连接。eg. api-demo.css</p>
+    <p>js文件名, 语义化，小驼峰。eg. apiDemo.js</p>
+    <p>class命名，语义化</p>
+    <p class="item">1，样式类的 小写，中划线连接。eg. class="content-icon"</p>
+    <p class="item">2，脚本会引用的类，‘J-’开头，表示这个类是会被脚本引用。如，class="J-btn"</p>
+    <p>id 命名，语义化（尽量少的用id来做样式挂在配置），保证id的全局唯一性。小写，中划线连接，如，id="app-contain"</p>
+</div>  
+
+<!-- 公共页脚 -->
+<script src="<%= script %>"></script>
+</body>
+</html>

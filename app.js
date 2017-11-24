@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(routes);
 
 // start timed task  
-ticking();    
+//ticking();
     
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

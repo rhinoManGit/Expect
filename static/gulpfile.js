@@ -31,7 +31,7 @@ var path = require('path');
 var sftp = require('gulp-sftp');
 var base64 = require('gulp-base64');
 var fs = require('fs');
-var tmodjs = require('tmodjs');
+//var tmodjs = require('tmodjs');
 
 var tpl = {
     name: 'rhino',
@@ -108,7 +108,6 @@ function upload(cfg, callback){
 function buildCss(styleSrc){
     gulp.src(styleSrc, {client: './'})
         .pipe(plumber({errorHandler: onError}))
-        .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./app/dest/css'))
@@ -130,7 +129,7 @@ function bundle(b, file) {
 }
 
 
-function tmodjsTask(callback){
+/*function tmodjsTask(callback){
 
     var tmod = new tmodjs("app/tpl", {
         type: "commonjs",
@@ -140,7 +139,7 @@ function tmodjsTask(callback){
 
     tmod.watch();
     callback();
-}
+}*/
 
 // 根据变动生成css与js
 function buildCssAndJs(){
@@ -713,7 +712,7 @@ function updateConfig(callback){
 }
 
 //default task
-gulp.task(tmodjsTask);
+//gulp.task(tmodjsTask);
 gulp.task(buildCssAndJs);
 
 //编译所有的less
@@ -742,7 +741,7 @@ gulp.task(serverCssA);
 // update config
 gulp.task(updateConfig);
 
-gulp.task('default', gulp.series('reset', 'Less', 'tmodjsTask', 'buildCssAndJs'));
+gulp.task('default', gulp.series('reset', 'Less', 'buildCssAndJs'));
 
 gulp.task('compile', gulp.series('reset', 'Less'));
 

@@ -1,13 +1,13 @@
 <style>
     .header{
-        height: 54px;
+        height: 73px;
         margin: auto;
-        background: #347de8;
+        background: #FFF;
         overflow: hidden;
+        border-bottom: 1px solid #dcdcdc;
     }
     .header-content{
         height: 100%;
-        background: #347de8;
         width: 1100px;
         margin: auto;
     }
@@ -15,7 +15,6 @@
         background: url(/app/img/head_img.png) no-repeat center;
         width: 123px;
         height: 100%;
-        background-size: 123px 32px;
         float: left;
         margin-right: 20px;
     }
@@ -27,18 +26,19 @@
     .header-content li{
         float: left;
     }
-    .header-content li a{
-        padding: 16px 15px 17px 15px;
-        color: #fff;
+    .header-content li>a{
+        padding: 23px 20px;
+        color: #5f5f5f;
         text-decoration: none;
         display: inline-block;
+        font-size: 15px;
     }
     .header-content li a.visited{
-        font-weight: 700;
-        background: #195ec1;
+        background: #fdfdfd;
+        border-bottom: 2px solid #249eff;
     }
     .header-content li a:not(.visited):hover{
-        background: #5da0ff;
+        border-bottom: 3px solid #249eff;
     }
 </style>
 <div class="header">
@@ -46,8 +46,9 @@
         <i class="header-content-logo"></i>
         <ul>
             <li><a href="">首页</a></li>
-            <li><a href="">总体成绩分析</a></li>
-            <li><a href="" class="visited">数据报表</a></li>
+            <li><a href="">代码规范</a></li>
+            <li><a href="">UI组件库</a></li>
+            <li><a href="" class="visited">Icon图标</a></li>
         </ul>
     </div>
 </div>
