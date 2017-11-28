@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", "Hiragino Sans GB", "Microsoft YaHei", "΢���ź�", Arial, SimSun, sans-serif;
+  font-family: "Open Sans", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, SimSun, sans-serif;
   line-height: 1.6;
 }
 a {
@@ -15,10 +15,38 @@ a {
 }
 .wrapper > h1 {
   font-weight: 700;
+  padding: 10px 0;
 }
 .wrapper > p {
   padding: 5px 0;
 }
 .wrapper > p.item {
   color: #666;
+}
+.wrapper > p.tip {
+  color: #e25050;
+}
+.wrapper > p.tip:before {
+  content: "注：";
+}
+.wrapper > p a {
+  cursor: help;
+}
+.wrapper > p > span {
+  color: #cecece;
+  background: #545454;
+  padding: 5px 11px;
+  display: block;
+}
+.wrapper > p > span > em {
+  color: #1fada0;
+}
+.wrapper > p > span > em.bad {
+  color: #e45021;
+}
+.standard-list {
+  display: inline-block;
+}
+.standard-list li {
+  display: block;
 }

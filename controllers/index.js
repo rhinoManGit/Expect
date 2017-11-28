@@ -1,10 +1,12 @@
 /**
  * Created by Administrator on 2017/9/18 0018.
  */
+var fs          = require('fs');
 var server      = require('./../service/');
 var sendEmail   = require('./../tools/sendEmail');
 var config      = require('./../config').config();
 var Excel       = require('exceljs');
+var markdown    = require("markdown").markdown;
 var CodeStandardModel = require('./../model/CodeStandard');
 
 function Index(){}
@@ -121,4 +123,76 @@ Action.codestandard = function(req, res, next){
 
     res.render('code-standard', codeStandardModel);
 }
+
+/*
+ * 代码规范 js
+ * */
+Action['codestandard-list'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard-list', codeStandardModel);
+}
+/*
+ * 代码规范 js
+ * */
+Action['codestandard-js'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard-js', codeStandardModel);
+}
+/*
+ * 代码规范 -js-next
+ * */
+Action['codestandard-js-next'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard-js-next', codeStandardModel);
+}
+/*
+ * 代码规范 -css
+ * */
+Action['codestandard-css'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard-css', codeStandardModel);
+}
+/*
+ * 代码规范-html
+ * */
+Action['codestandard-html'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范'
+    }
+
+    var codeStandardModel = new CodeStandardModel(o);
+
+    res.render('code-standard-html', codeStandardModel);
+}
+
 module.exports = new Index();

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- layout -->
+    <%-include("common/layout_header")%>
+
+    <link rel='stylesheet' href='/app/common/css/github.css' />
+    <link rel='stylesheet' href='/app/common/css/frameworks.css' />
+    <link rel='stylesheet' href='<%= link %>' />
+</head>
+<body>
+<!-- 公共头部 -->
+<%-include("common/header")%>
+
+<div class="wrapper">
+    <article class="markdown-body entry-content" itemprop="text"><h1><a href="#javascript-编码规范---esnext-补充篇草案" aria-hidden="true" class="anchor" id="user-content-javascript-编码规范---esnext-补充篇草案"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>JavaScript 编码规范 - ESNext 补充篇（草案）</h1>
+        <p><a href="#user-content-1-%E5%89%8D%E8%A8%80">1 前言</a></p>
+        <p><a href="#user-content-2-%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC">2 代码风格</a></p>
+        <p>　　<a href="#user-content-21-%E6%96%87%E4%BB%B6">2.1 文件</a></p>
+        <p>　　<a href="#user-content-22-%E7%BB%93%E6%9E%84">2.2 结构</a></p>
+        <p>　　　　<a href="#user-content-221-%E7%BC%A9%E8%BF%9B">2.2.1 缩进</a></p>
+        <p>　　　　<a href="#user-content-222-%E7%A9%BA%E6%A0%BC">2.2.2 空格</a></p>
+        <p>　　　　<a href="#user-content-223-%E8%AF%AD%E5%8F%A5">2.2.3 语句</a></p>
+        <p><a href="#user-content-3-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7">3 语言特性</a></p>
+        <p>　　<a href="#user-content-31-%E5%8F%98%E9%87%8F">3.1 变量</a></p>
+        <p>　　<a href="#user-content-32-%E8%A7%A3%E6%9E%84">3.2 解构</a></p>
+        <p>　　<a href="#user-content-33-%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2">3.3 模板字符串</a></p>
+        <p>　　<a href="#user-content-34-%E5%87%BD%E6%95%B0">3.4 函数</a></p>
+        <p>　　<a href="#user-content-35-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0">3.5 箭头函数</a></p>
+        <p>　　<a href="#user-content-36-%E5%AF%B9%E8%B1%A1">3.6 对象</a></p>
+        <p>　　<a href="#user-content-37-%E7%B1%BB">3.7 类</a></p>
+        <p>　　<a href="#user-content-38-%E6%A8%A1%E5%9D%97">3.8 模块</a></p>
+        <p>　　<a href="#user-content-39-%E9%9B%86%E5%90%88">3.9 集合</a></p>
+        <p>　　<a href="#user-content-310-%E5%BC%82%E6%AD%A5">3.10 异步</a></p>
+        <p><a href="#user-content-4-%E7%8E%AF%E5%A2%83">4 环境</a></p>
+        <p>　　<a href="#user-content-41-%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83">4.1 运行环境</a></p>
+        <p>　　<a href="#user-content-42-%E9%A2%84%E7%BC%96%E8%AF%91">4.2 预编译</a></p>
+        <h2><a href="#1-前言" aria-hidden="true" class="anchor" id="user-content-1-前言"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 前言</h2>
+        <p>随着 ECMAScript 的不断发展，越来越多更新的语言特性将被使用，给应用的开发带来方便。本文档的目标是使 ECMAScript 新特性的代码风格保持一致，并给予一些实践建议。</p>
+        <p>本文档仅包含新特性部分。基础部分请遵循 <a href="/rhinoManGit/spec/blob/master/javascript-style-guide.md">JavaScript Style Guide</a>。</p>
+        <p>由于 ECMAScript 依然在快速的不断发展，本文档也将可能随时保持更新。更新内容主要涉及对新增的语言特性的格式规范化、实践指导，引擎与编译器环境变化的使用指导。</p>
+        <p>虽然本文档是针对 ECMAScript 设计的，但是在使用各种基于 ECMAScript 扩展的语言时(如 JSX、TypeScript 等)，适用的部分也应尽量遵循本文档的约定。</p>
+        <h2><a href="#2-代码风格" aria-hidden="true" class="anchor" id="user-content-2-代码风格"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 代码风格</h2>
+        <h3><a href="#21-文件" aria-hidden="true" class="anchor" id="user-content-21-文件"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.1 文件</h3>
+        <h5><a href="#建议-esnext-语法的-javascript-文件使用-js-扩展名" aria-hidden="true" class="anchor" id="user-content-建议-esnext-语法的-javascript-文件使用-js-扩展名"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] ESNext 语法的 JavaScript 文件使用 <code>.js</code> 扩展名。</h5>
+        <h5><a href="#强制-当文件无法使用-js-扩展名时使用-es-扩展名" aria-hidden="true" class="anchor" id="user-content-强制-当文件无法使用-js-扩展名时使用-es-扩展名"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 当文件无法使用 <code>.js</code> 扩展名时，使用 <code>.es</code> 扩展名。</h5>
+        <p>解释：</p>
+        <p>某些应用开发时，可能同时包含 ES 5和 ESNext 文件，运行环境仅支持 ES5，ESNext 文件需要经过预编译。部分场景下，编译工具的选择可能需要通过扩展名区分，需要重新定义ESNext文件的扩展名。此时，ESNext 文件必须使用 <code>.es</code> 扩展名。</p>
+        <p>但是，更推荐使用其他条件作为是否需要编译的区分：</p>
+        <ol>
+            <li>基于文件内容。</li>
+            <li>不同类型文件放在不同目录下。</li>
+        </ol>
+        <h3><a href="#22-结构" aria-hidden="true" class="anchor" id="user-content-22-结构"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2 结构</h3>
+        <h4><a href="#221-缩进" aria-hidden="true" class="anchor" id="user-content-221-缩进"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2.1 缩进</h4>
+        <h5><a href="#建议-使用多行模板字符串时遵循缩进原则当空行与空白字符敏感时不使用多行模板字符串" aria-hidden="true" class="anchor" id="user-content-建议-使用多行模板字符串时遵循缩进原则当空行与空白字符敏感时不使用多行模板字符串"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用多行模板字符串时遵循缩进原则。当空行与空白字符敏感时，不使用多行模板字符串。</h5>
+        <p>解释：</p>
+        <p><code>4</code> 空格为一个缩进，换行后添加一层缩进。将起始和结束的 <code>`</code> 符号单独放一行，有助于生成 HTML 时的标签对齐。</p>
+        <p>为避免破坏缩进的统一，当空行与空白字符敏感时，建议使用 <code>多个模板字符串</code> 或 <code>普通字符串</code> 进行连接运算，也可使用数组 <code>join</code> 生成字符串。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+    <span class="pl-k">let</span> html <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">`</span></span>
+<span class="pl-s">        &lt;div&gt;</span>
+<span class="pl-s">            &lt;p&gt;&lt;/p&gt;</span>
+<span class="pl-s">            &lt;p&gt;&lt;/p&gt;</span>
+<span class="pl-s">        &lt;/div&gt;</span>
+<span class="pl-s">    <span class="pl-pds">`</span></span>;
+}
+
+<span class="pl-c"><span class="pl-c">//</span> Good</span>
+<span class="pl-k">function</span> <span class="pl-en">greeting</span>(<span class="pl-smi">name</span>) {
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-cce">\n</span><span class="pl-pds">'</span></span>
+        <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">name</span>.<span class="pl-smi">firstName</span><span class="pl-pse">}</span></span> <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">name</span>.<span class="pl-smi">lastName</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>;
+}
+
+<span class="pl-c"><span class="pl-c">//</span> Bad</span>
+<span class="pl-k">function</span> <span class="pl-en">greeting</span>(<span class="pl-smi">name</span>) {
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">`</span>Hello,</span>
+<span class="pl-s"><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">name</span>.<span class="pl-smi">firstName</span><span class="pl-pse">}</span></span> <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">name</span>.<span class="pl-smi">lastName</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>;
+}</pre></div>
+        <h4><a href="#222-空格" aria-hidden="true" class="anchor" id="user-content-222-空格"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2.2 空格</h4>
+        <h5><a href="#强制-使用-generator-时-前面不允许有空格-后面必须有一个空格" aria-hidden="true" class="anchor" id="user-content-强制-使用-generator-时-前面不允许有空格-后面必须有一个空格"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用 <code>generator</code> 时，<code>*</code> 前面不允许有空格，<code>*</code> 后面必须有一个空格。</h5>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">function</span><span class="pl-k">*</span> <span class="pl-en">caller</span>() {
+    <span class="pl-k">yield</span> <span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>;
+    <span class="pl-k">yield</span><span class="pl-k">*</span> <span class="pl-en">callee</span>();
+    <span class="pl-k">yield</span> <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>;
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-k">*</span> <span class="pl-en">caller</span>() {
+    <span class="pl-k">yield</span> <span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>;
+    <span class="pl-k">yield</span> <span class="pl-k">*</span><span class="pl-en">callee</span>();
+    <span class="pl-k">yield</span> <span class="pl-s"><span class="pl-pds">'</span>d<span class="pl-pds">'</span></span>;
+}</pre></div>
+        <h4><a href="#223-语句" aria-hidden="true" class="anchor" id="user-content-223-语句"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2.3 语句</h4>
+        <h5><a href="#强制-类声明结束不允许添加分号" aria-hidden="true" class="anchor" id="user-content-强制-类声明结束不允许添加分号"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 类声明结束不允许添加分号。</h5>
+        <p>解释：</p>
+        <p>与函数声明保持一致。</p>
+        <h5><a href="#强制-类成员定义中方法定义后不允许添加分号成员属性定义后必须添加分号" aria-hidden="true" class="anchor" id="user-content-强制-类成员定义中方法定义后不允许添加分号成员属性定义后必须添加分号"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 类成员定义中，方法定义后不允许添加分号，成员属性定义后必须添加分号。</h5>
+        <p>解释：</p>
+        <p>成员属性是当前 <strong>Stage 0</strong> 的标准，如果使用的话，则定义后加上分号。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">class</span> <span class="pl-en">Foo</span> {
+    foo <span class="pl-k">=</span> <span class="pl-c1">3</span>;
+
+    <span class="pl-en">bar</span>() {
+
+    }
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">class</span> <span class="pl-en">Foo</span> {
+    foo <span class="pl-k">=</span> <span class="pl-c1">3</span>
+
+    <span class="pl-en">bar</span>() {
+
+    }
+}</pre></div>
+        <h5><a href="#强制-export-语句后不允许出现表示空语句的分号" aria-hidden="true" class="anchor" id="user-content-强制-export-语句后不允许出现表示空语句的分号"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] <code>export</code> 语句后，不允许出现表示空语句的分号。</h5>
+        <p>解释：</p>
+        <p><code>export</code> 关键字不影响后续语句类型。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">export</span> <span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+}
+
+<span class="pl-k">export</span> <span class="pl-c1">default</span> <span class="pl-k">function</span> <span class="pl-en">bar</span>() {
+}
+
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">export</span> <span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+};
+
+<span class="pl-k">export</span> <span class="pl-c1">default</span> <span class="pl-k">function</span> <span class="pl-en">bar</span>() {
+};</pre></div>
+        <h5><a href="#强制-属性装饰器后可以不加分号的场景不允许加分号" aria-hidden="true" class="anchor" id="user-content-强制-属性装饰器后可以不加分号的场景不允许加分号"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 属性装饰器后，可以不加分号的场景，不允许加分号。</h5>
+        <p>解释：</p>
+        <p>只有一种场景是必须加分号的：当属性 <code>key</code> 是 <code>computed property key</code> 时，其装饰器必须加分号，否则修饰 <code>key</code> 的 <code>[]</code> 会做为之前表达式的 <code>property accessor</code>。</p>
+        <p>上面描述的场景，装饰器后需要加分号。其余场景下的属性装饰器后不允许加分号。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">class</span> <span class="pl-en">Foo</span> {
+    @<span class="pl-en">log</span>(<span class="pl-s"><span class="pl-pds">'</span>INFO<span class="pl-pds">'</span></span>)
+    <span class="pl-en">bar</span>() {
+
+    }
+
+    @<span class="pl-en">log</span>(<span class="pl-s"><span class="pl-pds">'</span>INFO<span class="pl-pds">'</span></span>);
+    [<span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">2</span>]() {
+
+    }
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">class</span> <span class="pl-en">Foo</span> {
+    @<span class="pl-en">log</span>(<span class="pl-s"><span class="pl-pds">'</span>INFO<span class="pl-pds">'</span></span>);
+    <span class="pl-en">bar</span>() {
+
+    }
+
+    @<span class="pl-en">log</span>(<span class="pl-s"><span class="pl-pds">'</span>INFO<span class="pl-pds">'</span></span>)
+    [<span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">2</span>]() {
+
+    }
+}</pre></div>
+        <h5><a href="#强制-箭头函数的参数只有一个并且不包含解构时参数部分的括号必须省略" aria-hidden="true" class="anchor" id="user-content-强制-箭头函数的参数只有一个并且不包含解构时参数部分的括号必须省略"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 箭头函数的参数只有一个，并且不包含解构时，参数部分的括号必须省略。</h5>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-smi">list</span>.<span class="pl-en">map</span>(<span class="pl-smi">item</span> <span class="pl-k">=&gt;</span> item <span class="pl-k">*</span> <span class="pl-c1">2</span>);
+
+<span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> fetchName <span class="pl-k">=</span> <span class="pl-k">async</span> <span class="pl-smi">id</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">let</span> user <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">request</span>(<span class="pl-s"><span class="pl-pds">`</span>users/<span class="pl-s1"><span class="pl-pse">${</span>id<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>);
+    <span class="pl-k">return</span> <span class="pl-smi">user</span>.<span class="pl-smi">fullName</span>;
+};
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-smi">list</span>.<span class="pl-en">map</span>((<span class="pl-smi">item</span>) <span class="pl-k">=&gt;</span> item <span class="pl-k">*</span> <span class="pl-c1">2</span>);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> fetchName <span class="pl-k">=</span> <span class="pl-k">async</span> (<span class="pl-smi">id</span>) <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">let</span> user <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">request</span>(<span class="pl-s"><span class="pl-pds">`</span>users/<span class="pl-s1"><span class="pl-pse">${</span>id<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>);
+    <span class="pl-k">return</span> <span class="pl-smi">user</span>.<span class="pl-smi">fullName</span>;
+};</pre></div>
+        <h5><a href="#建议-箭头函数的函数体只有一个单行表达式语句且作为返回值时省略--和-return" aria-hidden="true" class="anchor" id="user-content-建议-箭头函数的函数体只有一个单行表达式语句且作为返回值时省略--和-return"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 箭头函数的函数体只有一个单行表达式语句，且作为返回值时，省略 <code>{}</code> 和 <code>return</code>。</h5>
+        <p>如果单个表达式过长，可以使用 <code>()</code> 进行包裹。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-smi">list</span>.<span class="pl-en">map</span>(<span class="pl-smi">item</span> <span class="pl-k">=&gt;</span> item <span class="pl-k">*</span> <span class="pl-c1">2</span>);
+
+<span class="pl-k">let</span> <span class="pl-en">foo</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> (
+    condition
+        <span class="pl-k">?</span> <span class="pl-en">returnValueA</span>()
+        <span class="pl-k">:</span> <span class="pl-en">returnValueB</span>()
+);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-smi">list</span>.<span class="pl-en">map</span>(<span class="pl-smi">item</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">return</span> item <span class="pl-k">*</span> <span class="pl-c1">2</span>;
+});</pre></div>
+        <h5><a href="#建议-箭头函数的函数体只有一个-object-literal且作为返回值时使用--包裹" aria-hidden="true" class="anchor" id="user-content-建议-箭头函数的函数体只有一个-object-literal且作为返回值时使用--包裹"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 箭头函数的函数体只有一个 <code>Object Literal</code>，且作为返回值时，使用 <code>()</code> 包裹。</h5>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-smi">list</span>.<span class="pl-en">map</span>(<span class="pl-smi">item</span> <span class="pl-k">=&gt;</span> ({name<span class="pl-k">:</span> item[<span class="pl-c1">0</span>], email<span class="pl-k">:</span> item[<span class="pl-c1">1</span>]}));</pre></div>
+        <h5><a href="#强制-解构多个变量时如果超过行长度限制每个解构的变量必须单独一行" aria-hidden="true" class="anchor" id="user-content-强制-解构多个变量时如果超过行长度限制每个解构的变量必须单独一行"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 解构多个变量时，如果超过行长度限制，每个解构的变量必须单独一行。</h5>
+        <p>解释：</p>
+        <p>太多的变量解构会让一行的代码非常长，极有可能超过单行长度控制，使代码可读性下降。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> {
+    name<span class="pl-k">:</span> personName,
+    email<span class="pl-k">:</span> personEmail,
+    sex<span class="pl-k">:</span> personSex,
+    age<span class="pl-k">:</span> personAge
+} <span class="pl-k">=</span> person;
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> {name<span class="pl-k">:</span> personName, email<span class="pl-k">:</span> personEmail,
+    sex<span class="pl-k">:</span> personSex, age<span class="pl-k">:</span> personAge
+} <span class="pl-k">=</span> person;</pre></div>
+        <h2><a href="#3-语言特性" aria-hidden="true" class="anchor" id="user-content-3-语言特性"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3 语言特性</h2>
+        <h3><a href="#31-变量" aria-hidden="true" class="anchor" id="user-content-31-变量"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.1 变量</h3>
+        <h4><a href="#强制-使用-let-和-const-定义变量不使用-var" aria-hidden="true" class="anchor" id="user-content-强制-使用-let-和-const-定义变量不使用-var"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用 <code>let</code> 和 <code>const</code> 定义变量，不使用 <code>var</code>。</h4>
+        <p>解释：</p>
+        <p>使用 <code>let</code> 和 <code>const</code> 定义时，变量作用域范围更明确。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">for</span> (<span class="pl-k">let</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-c1">10</span>; i<span class="pl-k">++</span>) {
+
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">for</span> (<span class="pl-k">var</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-c1">10</span>; i<span class="pl-k">++</span>) {
+
+}</pre></div>
+        <h3><a href="#32-解构" aria-hidden="true" class="anchor" id="user-content-32-解构"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.2 解构</h3>
+        <h4><a href="#强制-不要使用3层及以上的解构" aria-hidden="true" class="anchor" id="user-content-强制-不要使用3层及以上的解构"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 不要使用3层及以上的解构。</h4>
+        <p>解释：</p>
+        <p>过多层次的解构会让代码变得难以阅读。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> {documentElement<span class="pl-k">:</span> {firstElementChild<span class="pl-k">:</span> {nextSibling}}} <span class="pl-k">=</span> <span class="pl-c1">window</span>;</pre></div>
+        <h4><a href="#建议-使用解构减少中间变量" aria-hidden="true" class="anchor" id="user-content-建议-使用解构减少中间变量"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用解构减少中间变量。</h4>
+        <p>解释：</p>
+        <p>常见场景如变量值交换，可能产生中间变量。这种场景推荐使用解构。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+[x, y] <span class="pl-k">=</span> [y, x];
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> temp <span class="pl-k">=</span> x;
+x <span class="pl-k">=</span> y;
+y <span class="pl-k">=</span> temp;</pre></div>
+        <h4><a href="#强制-仅定义一个变量时不允许使用解构" aria-hidden="true" class="anchor" id="user-content-强制-仅定义一个变量时不允许使用解构"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 仅定义一个变量时不允许使用解构。</h4>
+        <p>解释：</p>
+        <p>在这种场景下，使用解构将降低代码可读性。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> len <span class="pl-k">=</span> <span class="pl-smi">myString</span>.<span class="pl-c1">length</span>;
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> {length<span class="pl-k">:</span> len} <span class="pl-k">=</span> myString;</pre></div>
+        <h4><a href="#强制-如果不节省编写时产生的中间变量解构表达式--号右边不允许是-objectliteral-和-arrayliteral" aria-hidden="true" class="anchor" id="user-content-强制-如果不节省编写时产生的中间变量解构表达式--号右边不允许是-objectliteral-和-arrayliteral"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 如果不节省编写时产生的中间变量，解构表达式 <code>=</code> 号右边不允许是 <code>ObjectLiteral</code> 和 <code>ArrayLiteral</code>。</h4>
+        <p>解释：</p>
+        <p>在这种场景下，使用解构将降低代码可读性，通常也并无收益。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> {first<span class="pl-k">:</span> firstName, last<span class="pl-k">:</span> lastName} <span class="pl-k">=</span> person;
+<span class="pl-k">let</span> one <span class="pl-k">=</span> <span class="pl-c1">1</span>;
+<span class="pl-k">let</span> two <span class="pl-k">=</span> <span class="pl-c1">2</span>;
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> [one, two] <span class="pl-k">=</span> [<span class="pl-c1">1</span>, <span class="pl-c1">2</span>];</pre></div>
+        <h4><a href="#强制-使用剩余运算符时剩余运算符之前的所有元素必需具名" aria-hidden="true" class="anchor" id="user-content-强制-使用剩余运算符时剩余运算符之前的所有元素必需具名"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用剩余运算符时，剩余运算符之前的所有元素必需具名。</h4>
+        <p>解释：</p>
+        <p>剩余运算符之前的元素省略名称可能带来较大的程序阅读障碍。如果仅仅为了取数组后几项，请使用 <code>slice</code> 方法。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> [one, two, <span class="pl-k">...</span>anyOther] <span class="pl-k">=</span> myArray;
+<span class="pl-k">let</span> other <span class="pl-k">=</span> <span class="pl-smi">myArray</span>.<span class="pl-c1">slice</span>(<span class="pl-c1">3</span>);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> [,,, <span class="pl-k">...</span>other] <span class="pl-k">=</span> myArray;</pre></div>
+        <h3><a href="#33-模板字符串" aria-hidden="true" class="anchor" id="user-content-33-模板字符串"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.3 模板字符串</h3>
+        <h4><a href="#强制-字符串内变量替换时不要使用-2-次及以上的函数调用" aria-hidden="true" class="anchor" id="user-content-强制-字符串内变量替换时不要使用-2-次及以上的函数调用"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 字符串内变量替换时，不要使用 <code>2</code> 次及以上的函数调用。</h4>
+        <p>解释：</p>
+        <p>在变量替换符内有太多的函数调用等复杂语法会导致可读性下降。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> fullName <span class="pl-k">=</span> <span class="pl-en">getFullName</span>(<span class="pl-en">getFirstName</span>(), <span class="pl-en">getLastName</span>());
+<span class="pl-k">let</span> s <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">`</span>Hello <span class="pl-s1"><span class="pl-pse">${</span>fullName<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>;
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> s <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">`</span>Hello <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-en">getFullName</span>(<span class="pl-en">getFirstName</span>(), <span class="pl-en">getLastName</span>())<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>;</pre></div>
+        <h3><a href="#34-函数" aria-hidden="true" class="anchor" id="user-content-34-函数"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.4 函数</h3>
+        <h4><a href="#建议-使用变量默认语法代替基于条件判断的默认值声明" aria-hidden="true" class="anchor" id="user-content-建议-使用变量默认语法代替基于条件判断的默认值声明"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用变量默认语法代替基于条件判断的默认值声明。</h4>
+        <p>解释：</p>
+        <p>添加默认值有助于引擎的优化，在未来 <code>strong mode</code> 下也会有更好的效果。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>(<span class="pl-smi">text</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>hello<span class="pl-pds">'</span></span>) {
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>(<span class="pl-smi">text</span>) {
+    text <span class="pl-k">=</span> text <span class="pl-k">||</span> <span class="pl-s"><span class="pl-pds">'</span>hello<span class="pl-pds">'</span></span>;
+}</pre></div>
+        <h4><a href="#强制-不要使用-arguments-对象应使用-args-代替" aria-hidden="true" class="anchor" id="user-content-强制-不要使用-arguments-对象应使用-args-代替"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 不要使用 <code>arguments</code> 对象，应使用 <code>...args</code> 代替。</h4>
+        <p>解释：</p>
+        <p>在未来 <code>strong mode</code> 下 <code>arguments</code> 将被禁用。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>(<span class="pl-k">...</span><span class="pl-v">args</span>) {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">args</span>.<span class="pl-c1">join</span>(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>));
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>([].<span class="pl-smi">join</span>.<span class="pl-c1">call</span>(<span class="pl-c1">arguments</span>));
+}</pre></div>
+        <h3><a href="#35-箭头函数" aria-hidden="true" class="anchor" id="user-content-35-箭头函数"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.5 箭头函数</h3>
+        <h4><a href="#强制-一个函数被设计为需要-call-和-apply-的时候不能是箭头函数" aria-hidden="true" class="anchor" id="user-content-强制-一个函数被设计为需要-call-和-apply-的时候不能是箭头函数"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 一个函数被设计为需要 <code>call</code> 和 <code>apply</code> 的时候，不能是箭头函数。</h4>
+        <p>解释：</p>
+        <p>箭头函数会强制绑定当前环境下的 <code>this</code>。</p>
+        <h3><a href="#36-对象" aria-hidden="true" class="anchor" id="user-content-36-对象"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.6 对象</h3>
+        <h4><a href="#建议-定义对象时如果所有键均指向同名变量则所有键都使用缩写如果有一个键无法指向同名变量则所有键都不使用缩写" aria-hidden="true" class="anchor" id="user-content-建议-定义对象时如果所有键均指向同名变量则所有键都使用缩写如果有一个键无法指向同名变量则所有键都不使用缩写"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 定义对象时，如果所有键均指向同名变量，则所有键都使用缩写；如果有一个键无法指向同名变量，则所有键都不使用缩写。</h4>
+        <p>解释：</p>
+        <p>目的在于保持所有键值对声明的一致性。</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {x, y, z};
+
+<span class="pl-k">let</span> foo2 <span class="pl-k">=</span> {
+    x<span class="pl-k">:</span> <span class="pl-c1">1</span>,
+    y<span class="pl-k">:</span> <span class="pl-c1">2</span>,
+    z<span class="pl-k">:</span> z
+};
+
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    x<span class="pl-k">:</span> x,
+    y<span class="pl-k">:</span> y,
+    z<span class="pl-k">:</span> z
+};
+
+<span class="pl-k">let</span> foo2 <span class="pl-k">=</span> {
+    x<span class="pl-k">:</span> <span class="pl-c1">1</span>,
+    y<span class="pl-k">:</span> <span class="pl-c1">2</span>,
+    z
+};</pre></div>
+        <h4><a href="#强制-定义方法时使用-methoddefinition-语法不使用-propertyname-functionexpression-语法" aria-hidden="true" class="anchor" id="user-content-强制-定义方法时使用-methoddefinition-语法不使用-propertyname-functionexpression-语法"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 定义方法时使用 <code>MethodDefinition</code> 语法，不使用 <code>PropertyName: FunctionExpression</code> 语法。</h4>
+        <p>解释：</p>
+        <p><code>MethodDefinition</code> 语法更清晰简洁。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    <span class="pl-en">bar</span>(<span class="pl-smi">x</span>, <span class="pl-smi">y</span>) {
+        <span class="pl-k">return</span> x <span class="pl-k">+</span> y;
+    }
+};
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    <span class="pl-en">bar</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">x</span>, <span class="pl-smi">y</span>) {
+        <span class="pl-k">return</span> x <span class="pl-k">+</span> y;
+    }
+};</pre></div>
+        <h4><a href="#建议-使用-objectkeys-或-objectentries-进行对象遍历" aria-hidden="true" class="anchor" id="user-content-建议-使用-objectkeys-或-objectentries-进行对象遍历"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>Object.keys</code> 或 <code>Object.entries</code> 进行对象遍历。</h4>
+        <p>解释：</p>
+        <p>不建议使用 <code>for .. in</code> 进行对象的遍历，以避免遗漏 <code>hasOwnProperty</code> 产生的错误。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">for</span> (<span class="pl-k">let</span> key <span class="pl-k">of</span> <span class="pl-c1">Object</span>.<span class="pl-c1">keys</span>(foo)) {
+    <span class="pl-k">let</span> value <span class="pl-k">=</span> foo[key];
+}
+
+<span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">for</span> (<span class="pl-k">let</span> [key, value] <span class="pl-k">of</span> <span class="pl-c1">Object</span>.<span class="pl-c1">entries</span>(foo)) {
+    <span class="pl-c"><span class="pl-c">//</span> ...</span>
+}</pre></div>
+        <h4><a href="#建议-定义对象的方法不应使用箭头函数" aria-hidden="true" class="anchor" id="user-content-建议-定义对象的方法不应使用箭头函数"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 定义对象的方法不应使用箭头函数。</h4>
+        <p>解释：</p>
+        <p>箭头函数将 <code>this</code> 绑定到当前环境，在 <code>obj.method()</code> 调用时容易导致不期待的 <code>this</code>。除非明确需要绑定 <code>this</code>，否则不应使用箭头函数。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    <span class="pl-en">bar</span>(<span class="pl-smi">x</span>, <span class="pl-smi">y</span>) {
+        <span class="pl-k">return</span> x <span class="pl-k">+</span> y;
+    }
+};
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    <span class="pl-en">bar</span><span class="pl-k">:</span> (<span class="pl-smi">x</span>, <span class="pl-smi">y</span>) <span class="pl-k">=&gt;</span> x <span class="pl-k">+</span> y
+};</pre></div>
+        <h4><a href="#建议-尽量使用计算属性键在一个完整的字面量中完整地定义一个对象避免对象定义后直接增加对象属性" aria-hidden="true" class="anchor" id="user-content-建议-尽量使用计算属性键在一个完整的字面量中完整地定义一个对象避免对象定义后直接增加对象属性"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 尽量使用计算属性键在一个完整的字面量中完整地定义一个对象，避免对象定义后直接增加对象属性。</h4>
+        <p>解释：</p>
+        <p>在一个完整的字面量中声明所有的键值，而不需要将代码分散开来，有助于提升代码可读性。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">const</span> <span class="pl-c1">MY_KEY</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>;
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {
+    [<span class="pl-c1">MY_KEY</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>Hash<span class="pl-pds">'</span></span>]<span class="pl-k">:</span> <span class="pl-c1">123</span>
+};
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">const</span> <span class="pl-c1">MY_KEY</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>;
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> {};
+foo[<span class="pl-c1">MY_KEY</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>Hash<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-c1">123</span>;</pre></div>
+        <h3><a href="#37-类" aria-hidden="true" class="anchor" id="user-content-37-类"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.7 类</h3>
+        <h4><a href="#强制-使用-class-关键字定义一个类" aria-hidden="true" class="anchor" id="user-content-强制-使用-class-关键字定义一个类"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用 <code>class</code> 关键字定义一个类。</h4>
+        <p>解释：</p>
+        <p>直接使用 <code>class</code> 定义类更清晰。不要再使用 <code>function</code> 和 <code>prototype</code> 形式的定义。</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">class</span> <span class="pl-en">TextNode</span> {
+    <span class="pl-en">constructor</span>(<span class="pl-smi">value</span>, <span class="pl-smi">engine</span>) {
+        <span class="pl-c1">this</span>.<span class="pl-c1">value</span> <span class="pl-k">=</span> value;
+        <span class="pl-c1">this</span>.<span class="pl-smi">engine</span> <span class="pl-k">=</span> engine;
+    }
+
+    <span class="pl-en">clone</span>() {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>;
+    }
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">TextNode</span>(<span class="pl-smi">value</span>, <span class="pl-smi">engine</span>) {
+    <span class="pl-c1">this</span>.<span class="pl-c1">value</span> <span class="pl-k">=</span> value;
+    <span class="pl-c1">this</span>.<span class="pl-smi">engine</span> <span class="pl-k">=</span> engine;
+}
+
+<span class="pl-smi">TextNode</span>.<span class="pl-c1">prototype</span>.<span class="pl-en">clone</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () {
+    <span class="pl-k">return</span> <span class="pl-c1">this</span>;
+};</pre></div>
+        <h4><a href="#强制-使用-super-访问父类成员而非父类的-prototype" aria-hidden="true" class="anchor" id="user-content-强制-使用-super-访问父类成员而非父类的-prototype"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用 <code>super</code> 访问父类成员，而非父类的 <code>prototype</code>。</h4>
+        <p>解释：</p>
+        <p>使用 <code>super</code> 和 <code>super.foo</code> 可以快速访问父类成员，而不必硬编码父类模块而导致修改和维护的不便，同时更节省代码。</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">class</span> <span class="pl-en">TextNode</span> <span class="pl-k">extends</span> <span class="pl-e">Node</span> {
+    <span class="pl-en">constructor</span>(<span class="pl-smi">value</span>, <span class="pl-smi">engine</span>) {
+        <span class="pl-c1">super</span>(value);
+        <span class="pl-c1">this</span>.<span class="pl-smi">engine</span> <span class="pl-k">=</span> engine;
+    }
+
+    <span class="pl-en">setNodeValue</span>(<span class="pl-smi">value</span>) {
+        <span class="pl-c1">super</span>.<span class="pl-en">setNodeValue</span>(value);
+        <span class="pl-c1">this</span>.<span class="pl-smi">textContent</span> <span class="pl-k">=</span> value;
+    }
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">class</span> <span class="pl-en">TextNode</span> <span class="pl-k">extends</span> <span class="pl-e">Node</span> {
+    <span class="pl-en">constructor</span>(<span class="pl-smi">value</span>, <span class="pl-smi">engine</span>) {
+        <span class="pl-c1">Node</span>.<span class="pl-c1">apply</span>(<span class="pl-c1">this</span>, <span class="pl-c1">arguments</span>);
+        <span class="pl-c1">this</span>.<span class="pl-smi">engine</span> <span class="pl-k">=</span> engine;
+    }
+
+    <span class="pl-en">setNodeValue</span>(<span class="pl-smi">value</span>) {
+        <span class="pl-c1">Node</span>.<span class="pl-c1">prototype</span>.<span class="pl-smi">setNodeValue</span>.<span class="pl-c1">call</span>(<span class="pl-c1">this</span>, value);
+        <span class="pl-c1">this</span>.<span class="pl-smi">textContent</span> <span class="pl-k">=</span> value;
+    }
+}</pre></div>
+        <h3><a href="#38-模块" aria-hidden="true" class="anchor" id="user-content-38-模块"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.8 模块</h3>
+        <h4><a href="#强制-export-与内容定义放在一起" aria-hidden="true" class="anchor" id="user-content-强制-export-与内容定义放在一起"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] <code>export</code> 与内容定义放在一起。</h4>
+        <p>解释：</p>
+        <p>何处声明要导出的东西，就在何处使用 <code>export</code> 关键字，不在声明后再统一导出。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">export</span> <span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+}
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">bar</span> <span class="pl-k">=</span> <span class="pl-c1">3</span>;
+
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+}
+
+<span class="pl-k">const</span> <span class="pl-c1">bar</span> <span class="pl-k">=</span> <span class="pl-c1">3</span>;
+
+<span class="pl-k">export</span> {<span class="pl-smi">foo</span>};
+<span class="pl-k">export</span> {<span class="pl-smi">bar</span>};</pre></div>
+        <h4><a href="#建议-相互之间无关联的内容使用命名导出" aria-hidden="true" class="anchor" id="user-content-建议-相互之间无关联的内容使用命名导出"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 相互之间无关联的内容使用命名导出。</h4>
+        <p>解释：</p>
+        <p>举个例子，工具对象中的各个方法，相互之间并没有强关联，通常外部会选择几个使用，则应该使用命名导出。</p>
+        <p>简而言之，当一个模块只扮演命名空间的作用时，使用命名导出。</p>
+        <h4><a href="#强制-所有-import-语句写在模块开始处" aria-hidden="true" class="anchor" id="user-content-强制-所有-import-语句写在模块开始处"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 所有 <code>import</code> 语句写在模块开始处。</h4>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">import</span> {<span class="pl-smi">bar</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./bar<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+    <span class="pl-smi">bar</span>.<span class="pl-en">work</span>();
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">foo</span>() {
+    <span class="pl-k">import</span> {<span class="pl-smi">bar</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./bar<span class="pl-pds">'</span></span>;
+    <span class="pl-smi">bar</span>.<span class="pl-en">work</span>();
+}</pre></div>
+        <h3><a href="#39-集合" aria-hidden="true" class="anchor" id="user-content-39-集合"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.9 集合</h3>
+        <h4><a href="#建议-对数组进行连接操作时使用数组展开语法" aria-hidden="true" class="anchor" id="user-content-建议-对数组进行连接操作时使用数组展开语法"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 对数组进行连接操作时，使用数组展开语法。</h4>
+        <p>解释：</p>
+        <p>用数组展开代替 <code>concat</code> 方法，数组展开对 <code>Iterable</code> 有更好的兼容性。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> [<span class="pl-k">...</span>foo, newValue];
+<span class="pl-k">let</span> bar <span class="pl-k">=</span> [<span class="pl-k">...</span>bar, <span class="pl-k">...</span>newValues];
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> foo <span class="pl-k">=</span> <span class="pl-smi">foo</span>.<span class="pl-c1">concat</span>(newValue);
+<span class="pl-k">let</span> bar <span class="pl-k">=</span> <span class="pl-smi">bar</span>.<span class="pl-c1">concat</span>(newValues);</pre></div>
+        <h4><a href="#建议-不要使用数组展开进行数组的复制操作" aria-hidden="true" class="anchor" id="user-content-建议-不要使用数组展开进行数组的复制操作"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 不要使用数组展开进行数组的复制操作。</h4>
+        <p>解释：</p>
+        <p>使用数组展开语法进行复制，代码可读性较差。推荐使用 <code>Array.from</code> 方法进行复制操作。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> otherArr <span class="pl-k">=</span> <span class="pl-c1">Array</span>.<span class="pl-en">from</span>(arr);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> otherArr <span class="pl-k">=</span> [<span class="pl-k">...</span>arr];</pre></div>
+        <h4><a href="#建议-尽可能使用-for--of-进行遍历" aria-hidden="true" class="anchor" id="user-content-建议-尽可能使用-for--of-进行遍历"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 尽可能使用 <code>for .. of</code> 进行遍历。</h4>
+        <p>解释：</p>
+        <p>使用 <code>for .. of</code> 可以更好地接受任何的 <code>Iterable</code> 对象，如 <code>Map#values</code> 生成的迭代器，使得方法的通用性更强。</p>
+        <p>以下情况除外：</p>
+        <ol>
+            <li>遍历确实成为了性能瓶颈，需要使用原生 <code>for</code> 循环提升性能。</li>
+            <li>需要遍历过程中的索引。</li>
+        </ol>
+        <h4><a href="#强制-当键值有可能不是字符串时必须使用-map当元素有可能不是字符串时必须使用-set" aria-hidden="true" class="anchor" id="user-content-强制-当键值有可能不是字符串时必须使用-map当元素有可能不是字符串时必须使用-set"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 当键值有可能不是字符串时，必须使用 <code>Map</code>；当元素有可能不是字符串时，必须使用 <code>Set</code>。</h4>
+        <p>解释：</p>
+        <p>使用普通 Object，对非字符串类型的 <code>key</code>，需要自己实现序列化。并且运行过程中的对象变化难以通知 Object。</p>
+        <h4><a href="#建议-需要一个不可重复的集合时应使用-set" aria-hidden="true" class="anchor" id="user-content-建议-需要一个不可重复的集合时应使用-set"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 需要一个不可重复的集合时，应使用 <code>Set</code>。</h4>
+        <p>解释：</p>
+        <p>不要使用 <code>{foo: true}</code> 这样的普通 <code>Object</code>。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> members <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Set</span>([<span class="pl-s"><span class="pl-pds">'</span>one<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>two<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>three<span class="pl-pds">'</span></span>]);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> members <span class="pl-k">=</span> {
+    one<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    two<span class="pl-k">:</span> <span class="pl-c1">true</span>,
+    three<span class="pl-k">:</span> <span class="pl-c1">true</span>
+};</pre></div>
+        <h4><a href="#建议-当需要遍历功能时使用-map-和-set" aria-hidden="true" class="anchor" id="user-content-建议-当需要遍历功能时使用-map-和-set"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 当需要遍历功能时，使用 <code>Map</code> 和 <code>Set</code>。</h4>
+        <p>解释：</p>
+        <p><code>Map</code> 和 <code>Set</code> 是可遍历对象，能够方便地使用 <code>for...of</code> 遍历。不要使用使用普通 Object。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> membersAge <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Map</span>([
+    [<span class="pl-s"><span class="pl-pds">'</span>one<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>],
+    [<span class="pl-s"><span class="pl-pds">'</span>two<span class="pl-pds">'</span></span>, <span class="pl-c1">20</span>],
+    [<span class="pl-s"><span class="pl-pds">'</span>three<span class="pl-pds">'</span></span>, <span class="pl-c1">30</span>]
+]);
+<span class="pl-k">for</span> (<span class="pl-k">let</span> [key, value] <span class="pl-k">of</span> map) {
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> membersAge <span class="pl-k">=</span> {
+    one<span class="pl-k">:</span> <span class="pl-c1">10</span>,
+    two<span class="pl-k">:</span> <span class="pl-c1">20</span>,
+    three<span class="pl-k">:</span> <span class="pl-c1">30</span>
+};
+<span class="pl-k">for</span> (<span class="pl-k">let</span> key <span class="pl-k">in</span> membersAge) {
+    <span class="pl-k">if</span> (<span class="pl-smi">membersAge</span>.<span class="pl-en">hasOwnProperty</span>(key)) {
+        <span class="pl-k">let</span> value <span class="pl-k">=</span> membersAge[key];
+    }
+}</pre></div>
+        <h4><a href="#建议-程序运行过程中有添加或移除元素的操作时使用-map-和-set" aria-hidden="true" class="anchor" id="user-content-建议-程序运行过程中有添加或移除元素的操作时使用-map-和-set"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 程序运行过程中有添加或移除元素的操作时，使用 <code>Map</code> 和 <code>Set</code>。</h4>
+        <p>解释：</p>
+        <p>使用 <code>Map</code> 和 <code>Set</code>，程序的可理解性更好；普通 Object 的语义更倾向于表达固定的结构。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> membersAge <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Map</span>();
+<span class="pl-smi">membersAge</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">'</span>one<span class="pl-pds">'</span></span>, <span class="pl-c1">10</span>);
+<span class="pl-smi">membersAge</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">'</span>two<span class="pl-pds">'</span></span>, <span class="pl-c1">20</span>);
+<span class="pl-smi">membersAge</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">'</span>three<span class="pl-pds">'</span></span>, <span class="pl-c1">30</span>);
+<span class="pl-smi">membersAge</span>.<span class="pl-c1">delete</span>(<span class="pl-s"><span class="pl-pds">'</span>one<span class="pl-pds">'</span></span>);
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">let</span> membersAge <span class="pl-k">=</span> {};
+<span class="pl-smi">membersAge</span>.<span class="pl-smi">one</span> <span class="pl-k">=</span> <span class="pl-c1">10</span>;
+<span class="pl-smi">membersAge</span>.<span class="pl-smi">two</span> <span class="pl-k">=</span> <span class="pl-c1">20</span>;
+<span class="pl-smi">membersAge</span>.<span class="pl-smi">three</span> <span class="pl-k">=</span> <span class="pl-c1">30</span>;
+<span class="pl-k">delete</span> membersAge[<span class="pl-s"><span class="pl-pds">'</span>one<span class="pl-pds">'</span></span>];</pre></div>
+        <h3><a href="#310-异步" aria-hidden="true" class="anchor" id="user-content-310-异步"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.10 异步</h3>
+        <h4><a href="#强制-回调函数的嵌套不得超过3层" aria-hidden="true" class="anchor" id="user-content-强制-回调函数的嵌套不得超过3层"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 回调函数的嵌套不得超过3层。</h4>
+        <p>解释：</p>
+        <p>深层次的回调函数的嵌套会让代码变得难以阅读。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-en">getUser</span>(userId, <span class="pl-k">function</span> (<span class="pl-smi">user</span>) {
+    <span class="pl-en">validateUser</span>(user, <span class="pl-k">function</span> (<span class="pl-smi">isValid</span>) {
+        <span class="pl-k">if</span> (isValid) {
+            <span class="pl-en">saveReport</span>(report, user, <span class="pl-k">function</span> () {
+                <span class="pl-en">notice</span>(<span class="pl-s"><span class="pl-pds">'</span>Saved!<span class="pl-pds">'</span></span>);
+            });
+        }
+    });
+});</pre></div>
+        <h4><a href="#建议-使用-promise-代替-callback" aria-hidden="true" class="anchor" id="user-content-建议-使用-promise-代替-callback"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>Promise</code> 代替 <code>callback</code>。</h4>
+        <p>解释：</p>
+        <p>相比 <code>callback</code>，使用 <code>Promise</code> 能够使复杂异步过程的代码更清晰。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">let</span> user;
+<span class="pl-en">getUser</span>(userId)
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span> (<span class="pl-smi">userObj</span>) {
+        user <span class="pl-k">=</span> userObj;
+        <span class="pl-k">return</span> <span class="pl-en">validateUser</span>(user);
+    })
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span> (<span class="pl-smi">isValid</span>) {
+        <span class="pl-k">if</span> (isValid) {
+            <span class="pl-k">return</span> <span class="pl-en">saveReport</span>(report, user);
+        }
+
+        <span class="pl-k">return</span> <span class="pl-c1">Promise</span>.<span class="pl-en">reject</span>(<span class="pl-s"><span class="pl-pds">'</span>Invalid!<span class="pl-pds">'</span></span>);
+    })
+    .<span class="pl-en">then</span>(
+        <span class="pl-k">function</span> () {
+            <span class="pl-en">notice</span>(<span class="pl-s"><span class="pl-pds">'</span>Saved!<span class="pl-pds">'</span></span>);
+        },
+        <span class="pl-k">function</span> (<span class="pl-smi">message</span>) {
+            <span class="pl-en">notice</span>(message);
+        }
+    );</pre></div>
+        <h4><a href="#强制-使用标准的-promise-api" aria-hidden="true" class="anchor" id="user-content-强制-使用标准的-promise-api"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 使用标准的 <code>Promise</code> API。</h4>
+        <p>解释：</p>
+        <ol>
+            <li>不允许使用非标准的 <code>Promise</code> API，如 <code>jQuery</code> 的 <code>Deferred</code>、<code>Q.js</code> 的 <code>defer</code> 等。</li>
+            <li>不允许使用非标准的 <code>Promise</code> 扩展 API，如 <code>bluebird</code> 的 <code>Promise.any</code> 等。</li>
+        </ol>
+        <p>使用标准的 <code>Promise</code> API，当运行环境都支持时，可以把 Promise Lib 直接去掉。</p>
+        <h4><a href="#强制-不允许直接扩展-promise-对象的-prototype" aria-hidden="true" class="anchor" id="user-content-强制-不允许直接扩展-promise-对象的-prototype"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 不允许直接扩展 <code>Promise</code> 对象的 <code>prototype</code>。</h4>
+        <p>解释：</p>
+        <p>理由和 <strong>不允许修改和扩展任何原生对象和宿主对象的原型</strong> 是一样的。如果想要使用更方便，可以用 utility 函数的形式。</p>
+        <h4><a href="#强制-不得为了编写的方便将可以并行的io过程串行化" aria-hidden="true" class="anchor" id="user-content-强制-不得为了编写的方便将可以并行的io过程串行化"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 不得为了编写的方便，将可以并行的IO过程串行化。</h4>
+        <p>解释：</p>
+        <p>并行 IO 消耗时间约等于 IO 时间最大的那个过程，串行的话消耗时间将是所有过程的时间之和。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-en">requestData</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span> (<span class="pl-smi">data</span>) {
+    <span class="pl-en">renderTags</span>(<span class="pl-smi">data</span>.<span class="pl-c1">tags</span>);
+    <span class="pl-en">renderArticles</span>(<span class="pl-smi">data</span>.<span class="pl-smi">articles</span>);
+});
+
+<span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">requestData</span>() {
+    <span class="pl-k">const</span> [<span class="pl-c1">tags</span>, <span class="pl-c1">articles</span>] <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-c1">Promise</span>.<span class="pl-c1">all</span>([
+        <span class="pl-en">requestTags</span>(),
+        <span class="pl-en">requestArticles</span>()
+    ]);
+    <span class="pl-k">return</span> {tags, articles};
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">requestData</span>() {
+    <span class="pl-k">let</span> tags <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">requestTags</span>();
+    <span class="pl-k">let</span> articles <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">requestArticles</span>();
+
+    <span class="pl-k">return</span> <span class="pl-c1">Promise</span>.<span class="pl-en">resolve</span>({tags, articles});
+}</pre></div>
+        <h4><a href="#建议-使用-asyncawait-代替-generator--co" aria-hidden="true" class="anchor" id="user-content-建议-使用-asyncawait-代替-generator--co"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>async/await</code> 代替 <code>generator</code> + <code>co</code>。</h4>
+        <p>解释：</p>
+        <p>使用语言自身的能力可以使代码更清晰，也无需引入 <code>co</code> 库。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-js"><pre><span class="pl-en">addReport</span>(report, userId).<span class="pl-en">then</span>(
+    <span class="pl-k">function</span> () {
+        <span class="pl-en">notice</span>(<span class="pl-s"><span class="pl-pds">'</span>Saved!<span class="pl-pds">'</span></span>);
+    },
+    <span class="pl-k">function</span> (<span class="pl-smi">message</span>) {
+        <span class="pl-en">notice</span>(message);
+    }
+);
+
+<span class="pl-c"><span class="pl-c">//</span> good</span>
+<span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">addReport</span>(<span class="pl-smi">report</span>, <span class="pl-smi">userId</span>) {
+    <span class="pl-k">let</span> user <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">getUser</span>(userId);
+    <span class="pl-k">let</span> isValid <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">validateUser</span>(user);
+
+    <span class="pl-k">if</span> (isValid) {
+        <span class="pl-k">let</span> savePromise <span class="pl-k">=</span> <span class="pl-en">saveReport</span>(report, user);
+        <span class="pl-k">return</span> <span class="pl-en">savePromise</span>();
+    }
+
+    <span class="pl-k">return</span> <span class="pl-c1">Promise</span>.<span class="pl-en">reject</span>(<span class="pl-s"><span class="pl-pds">'</span>Invalid<span class="pl-pds">'</span></span>);
+}
+
+<span class="pl-c"><span class="pl-c">//</span> bad</span>
+<span class="pl-k">function</span> <span class="pl-en">addReport</span>(<span class="pl-smi">report</span>, <span class="pl-smi">userId</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">co</span>(<span class="pl-k">function</span><span class="pl-k">*</span> () {
+        <span class="pl-k">let</span> user <span class="pl-k">=</span> <span class="pl-k">yield</span> <span class="pl-en">getUser</span>(userId);
+        <span class="pl-k">let</span> isValid <span class="pl-k">=</span> <span class="pl-k">yield</span> <span class="pl-en">validateUser</span>(user);
+
+        <span class="pl-k">if</span> (isValid) {
+            <span class="pl-k">let</span> savePromise <span class="pl-k">=</span> <span class="pl-en">saveReport</span>(report, user);
+            <span class="pl-k">return</span> <span class="pl-en">savePromise</span>();
+        }
+
+        <span class="pl-k">return</span> <span class="pl-c1">Promise</span>.<span class="pl-en">reject</span>(<span class="pl-s"><span class="pl-pds">'</span>Invalid<span class="pl-pds">'</span></span>);
+    });
+}</pre></div>
+        <h2><a href="#4-环境" aria-hidden="true" class="anchor" id="user-content-4-环境"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4 环境</h2>
+        <h3><a href="#41-运行环境" aria-hidden="true" class="anchor" id="user-content-41-运行环境"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.1 运行环境</h3>
+        <h4><a href="#建议-持续跟进与关注运行环境对语言特性的支持程度" aria-hidden="true" class="anchor" id="user-content-建议-持续跟进与关注运行环境对语言特性的支持程度"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 持续跟进与关注运行环境对语言特性的支持程度。</h4>
+        <p>解释：</p>
+        <p><a href="https://kangax.github.io/compat-table/es6/" rel="nofollow">查看环境对语言特性的支持程度</a></p>
+        <p>ES 标准的制定还在不断进行中，各种环境对语言特性的支持也日新月异。了解项目中用到了哪些 ESNext 的特性，了解项目的运行环境，并持续跟进这些特性在运行环境中的支持程度是很有必要的。这意味着：</p>
+        <ol>
+            <li>如果有任何一个运行环境（比如 chrome）支持了项目里用到的所有特性，你可以在开发时抛弃预编译。</li>
+            <li>如果所有环境都支持了某一特性（比如 Promise），你可以抛弃相关的 shim，或无需在预编译时进行转换。</li>
+            <li>如果所有环境都支持了项目里用到的所有特性，你可以完全抛弃预编译。</li>
+        </ol>
+        <p>无论如何，在选择预编译工具时，你都需要清晰的知道你现阶段将在项目里使用哪些语言特性，然后了解预编译工具对语言特性的支持程度，做出选择。</p>
+        <h4><a href="#强制-在运行环境中没有-promise-时将-promise-的实现-shim-到-global-中" aria-hidden="true" class="anchor" id="user-content-强制-在运行环境中没有-promise-时将-promise-的实现-shim-到-global-中"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[强制] 在运行环境中没有 <code>Promise</code> 时，将 <code>Promise</code> 的实现 <code>shim</code> 到 <code>global</code> 中。</h4>
+        <p>解释：</p>
+        <p>当前运行环境下没有 <code>Promise</code> 时，可以引入 <code>shim</code> 的扩展。如果自己实现，需要实现在 <code>global</code> 下，并且与标准 API 保持一致。</p>
+        <p>这样，未来运行环境支持时，可以随时把 <code>Promise</code> 扩展直接扔掉，而应用代码无需任何修改。</p>
+        <h3><a href="#42-预编译" aria-hidden="true" class="anchor" id="user-content-42-预编译"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.2 预编译</h3>
+        <h4><a href="#建议-使用-babel-做为预编译工具时建议使用-5x-版本" aria-hidden="true" class="anchor" id="user-content-建议-使用-babel-做为预编译工具时建议使用-5x-版本"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>babel</code> 做为预编译工具时，建议使用 <code>5.x</code> 版本。</h4>
+        <p>解释：</p>
+        <p>由于 <code>babel</code> 最新的 <code>6</code> 暂时还不稳定，建议暂时使用 <code>5.x</code>。不同的产品，对于浏览器支持的情况不同，使用 <code>babel</code> 的时候，需要设置的参数也有一些区别。下面在示例中给出一些建议的参数。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-shell"><pre>＃ 建议的参数
+--loose all --modules amd --blacklist strict
+
+＃ 如果需要使用 es7.classProperties、es7.decorators 等一些特性，需要额外的 --stage 0 参数
+--loose all --modules amd --blacklist strict --stage 0</pre></div>
+        <h4><a href="#建议-使用-babel-做为预编译工具时通过-external-helpers-减少生成文件的大小" aria-hidden="true" class="anchor" id="user-content-建议-使用-babel-做为预编译工具时通过-external-helpers-减少生成文件的大小"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>babel</code> 做为预编译工具时，通过 <code>external-helpers</code> 减少生成文件的大小。</h4>
+        <p>解释：</p>
+        <p>当 <code>babel</code> 在转换代码的过程中发现需要一些特性时，会在该文件头部生成对应的 <code>helper</code> 代码。默认情况下，对于每一个经由 <code>babel</code> 处理的文件，均会在文件头部生成对应需要的辅助函数，多份文件辅助函数存在重复，占用了不必要的代码体积。</p>
+        <p>因此推荐打开<code>externalHelpers: true</code>选项，使 <code>babel</code> 在转换后内容中不写入 <code>helper</code> 相关的代码，而是使用一个外部的 <code>.js</code>统一提供所有的 <code>helper</code>。对于<a href="https://github.com/babel/babel.github.io/blob/5.0.0/docs/usage/external-helpers.md">external-helpers</a>的使用，可以有两种方式：</p>
+        <ol>
+            <li>默认方式：需要通过 <code>&lt;script&gt;</code> 自行引入<code>babel-polyfill.js</code> 和 <code>babel-external-helpers.js</code>。</li>
+            <li>定制方式：自己实现 <a href="https://github.com/babel/babel.github.io/blob/5.0.0/docs/usage/runtime.md">babel-runtime</a>。</li>
+        </ol>
+        <p>示例：</p>
+        <div class="highlight highlight-source-shell"><pre><span class="pl-c"><span class="pl-c">#</span> 默认方式</span>
+--loose all --modules amd --external-helpers
+<span class="pl-c"><span class="pl-c">#</span> `babelHelpers` 的代码可以通过执行 `babel-external-helpers -t var` 得到所有相关API的实现</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 定制方式</span>
+--loose all --modules amd --optional runtime</pre></div>
+        <h4><a href="#建议-使用-typescript-做为预编译工具时建议使用-16-版本" aria-hidden="true" class="anchor" id="user-content-建议-使用-typescript-做为预编译工具时建议使用-16-版本"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>TypeScript</code> 做为预编译工具时，建议使用 <code>1.6+</code> 版本。</h4>
+        <p>解释：</p>
+        <p><code>TypeScript</code> 1.6 之后，基本摒弃了之前的与 ESNext 相冲突的地方。目前 <code>TypeScript</code> 的思路就是遵循标准，将 stage 已经足够成熟的功能纳入，并提供静态类型和类型检查，所以其在 stage 0/1 的支持上不如 <code>babel</code>。另外，<code>TypeScript</code> 不能指定关闭某个 transform，但其编译速度比 <code>babel</code> 更高。</p>
+        <p><code>TypeScript</code> 的常用参数在下面给出了示例。</p>
+        <p>示例：</p>
+        <div class="highlight highlight-source-shell"><pre>--module amd --target ES3
+--module commonjs --target ES6</pre></div>
+        <h4><a href="#建议-使用-typescript-做为预编译工具时不使用-tsc-命令" aria-hidden="true" class="anchor" id="user-content-建议-使用-typescript-做为预编译工具时不使用-tsc-命令"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 使用 <code>TypeScript</code> 做为预编译工具时，不使用 <code>tsc</code> 命令。</h4>
+        <p>解释：</p>
+        <p><code>TypeScript</code> 提供的 <code>tsc</code> 命令只支持后缀名 <code>.ts</code>、<code>.tsx</code>、<code>.d.ts</code> 的文件编译，对于 JavaScript 来说，保持后缀名为 <code>.js</code> 是原则，本文档的 <code>文件</code> 章节也有所要求。</p>
+        <p>如果要使用 <code>TypeScript</code> 做为预编译工具，可基于其 <a href="https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API">Compiler API</a> 开发自己的预编译工具。如果你是 FIS 用户，可以使用 <a href="https://github.com/fex-team/fis3-parser-typescript">FIS TypeScript 插件</a>。</p>
+        <h4><a href="#建议-生成的代码在浏览器环境运行时应生成-amd-模块化代码" aria-hidden="true" class="anchor" id="user-content-建议-生成的代码在浏览器环境运行时应生成-amd-模块化代码"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 生成的代码在浏览器环境运行时，应生成 AMD 模块化代码。</h4>
+        <p>解释：</p>
+        <p>AMD 在浏览器环境应用较为成熟。</p>
+        <h4><a href="#建议-浏览器端项目中如果-esnext-代码和-es35-代码混合不要使用-typescript-做为预编译工具" aria-hidden="true" class="anchor" id="user-content-建议-浏览器端项目中如果-esnext-代码和-es35-代码混合不要使用-typescript-做为预编译工具"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] 浏览器端项目中如果 ESNext 代码和 ES3/5 代码混合，不要使用 <code>TypeScript</code> 做为预编译工具。</h4>
+        <p>解释：</p>
+        <p><code>TypeScript</code> 产生的 module 代码使用 exports.default 导出默认的 export，但是没有直接为 module.exports 赋值，导致在另外一个普通文件中使用 require('moduleName') 是拿不到东西的。</p>
+        <p>需要使用 <code>TypeScript</code> 的话，建议整个项目所有文件都是 ESNext module 的，采用混合的 module 容易出现不可预期的结果。</p>
+        <h4><a href="#建议-amdcommonjs-模块依赖-esnext-模块时amdcommonjs-模块对-default-export-的-require-需要改造" aria-hidden="true" class="anchor" id="user-content-建议-amdcommonjs-模块依赖-esnext-模块时amdcommonjs-模块对-default-export-的-require-需要改造"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>[建议] AMD/CommonJS 模块依赖 ESNext 模块时，AMD/CommonJS 模块对 default export 的 require 需要改造。</h4>
+        <p>解释：</p>
+        <p>ESNext 模块经过编译后，named export 会挂载在 exports 对象上，default export 也会挂载在 exports 对象上名称为 default 的属性。同时 exports 对象会包含一个值为 true 的 __esModule 属性。那么问题来了，当 AMD/CommonJS 模块依赖了 ESNext 模块时，require 期望拿到的是 exports.default，但你实际上拿到的是 exports。</p>
+        <p>所以，老的 AMD/CommonJS 模块依赖了 default export 的 ESNext 模块时，对 default export 的 require 需要改造成 <code>require('name').default</code>。</p>
+        <p>另外，如果是 ESNext 模块之间的互相依赖，transpiler 会通过加入中间对象和引入 interop 方法，所以不会产生这个问题。</p>
+    </article>
+</div>
+
+<!-- 公共页脚 -->
+<%-include("common/footer")%>
+</body>
+</html>

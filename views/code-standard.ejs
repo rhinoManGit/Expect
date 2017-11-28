@@ -9,7 +9,10 @@
 <body>
 <!-- 公共头部 -->
 <%-include("common/header")%>
+
 <div class="wrapper">
+    <p class="tip">JK-前端编码规范标准：<a href="/index/codestandard-list" target="_blank">JK-前端编码规范</a></p>
+
     <h1>文件命名：</h1>
     <p>html文件命名, 语义化，全小写，中划线连接。eg. api-demo.html</p>
     <p>css文件名, 语义化，全小写，中划线连接。eg. api-demo.css</p>
@@ -17,9 +20,80 @@
     <p>class命名，语义化</p>
     <p class="item">1，样式类的 小写，中划线连接。eg. class="content-icon"</p>
     <p class="item">2，脚本会引用的类，‘J-’开头，表示这个类是会被脚本引用。如，class="J-btn"</p>
-    <p>id 命名，语义化（尽量少的用id来做样式挂在配置），保证id的全局唯一性。小写，中划线连接，如，id="app-contain"</p>
-</div>  
+    <p>id 命名，语义化（一般情况下ID不应该被应用于样式），保证id的全局唯一性。小写，中划线连接，如，id="app-contain"</p>
 
+    <h1>本地存储:localStorage，sessionStorage，cookie</h1>
+    <p>域名级别：localStorage、 cookie</p>
+    <p>tab(会话)级别：sessionStorage</p>
+    <p>规范：</p>
+    <p class="item">登录统一: cookie</p>
+    <p class="item">localStorage长期性数据、数据的唯一性、语义化key, key：项目缩写+ ‘_’+功能, eg. teacher_loginInfo</p>
+    <p class="item">sessionStorage、临时性数据，不考虑tab切换，key：项目缩写+ ‘_’+功能, eg. teacher_loginInfo</p>
+    <p class="tip">
+        localStorage的空间有限，大家在使用的时候珍惜空间，i.尽量存放有效数据; ii. 记得写入释放机制，防止数据污染和误删除的情况
+    </p>
+
+    <h1>技术栈</h1>
+    <p>客户端渲染框架，现阶段Angular，后期逐渐推行Vue。统一vue</p>
+    <p>建议大家踊跃使用es6, 构建工具都会嵌入</p>
+    <p>项目构建部署工具：Gulp，webpack</p>
+
+    <h1>工具类统一</h1>
+    <p>图表插件建议大家统一用：Echarts. 如果使用过程中有实现不了的功能，希望能提出到@王舵这里。</p>
+
+    <h1>安装gulp 4.0</h1>
+    <p>npm install gulpjs/gulp#4.0 -g</p>
+    <p>npm install gulpjs/gulp#4.0 --save-dev</p>
+    <p><a href="https://mp.weixin.qq.com/s?__biz=MzIyMjE0ODQ0OQ==&mid=504069055&idx=1&sn=cc57dd70d720ef17013dde4d2cb272b6" TARGET="_blank">Gulp 4.0</a></p>
+    <p class="tip">用git工具git&nbsp;bash安装</p>
+
+    <h1>协议</h1>
+    <p>html，js， css中的路径统一用双协议写法，不要写死协议，
+        <span>
+            如：background: url(http://static.example.com/images/bg.jpg);<br />
+        &lt;script src="//cdn.com/foundation.min.js"&lt;/script&gt;
+        </span>
+    </p>
+    <h1>CSS引号</h1>
+    <p>属性选择器或属性值用双引号（""），而不是单引号（''）括起来。</p>
+    <p>URI值（url()）不要使用引号。</p>
+    <p>js中用单引号，方便和html和的区分开，避免转义</p>
+
+    <h1>变量命名语义化</h1>
+    <p>
+        命名方式：类型(小写)+描述（首字母大写）,string:s,int:i,object：o,array：a, dom：e, $元素: $
+        <span>
+            <em class="bad">
+                Bad：<br/>
+                exampara: {<br/>
+                    &nbsp;&nbsp;&nbsp;iid: iid,<br/>
+                    &nbsp;&nbsp;&nbsp;itype: itype<br/>
+                }<br/>
+            </em>
+            <em>
+            Good：<br/>
+            oExample: {<br/>
+                &nbsp;&nbsp;&nbsp;id: sId,<br/>
+                &nbsp;&nbsp;&nbsp;type: sType<br/>
+            }
+            </em>
+        </span>
+    </p>
+
+    <h1>关于登录的问题</h1>
+    <p>方式一，iis实现登录</p>
+    <p class="item">
+        在iis中配置一个站点，站点物理路径指向于login目录；<br/>
+        然后添加不同的虚拟目录，如report指向于report项目；...<br/>
+        指定80端口。配置一个可登陆的域名，如，teacher.fclassroom.com<br/>
+        访问：http://teacher.fclassroom.com/report/main.html即可
+    </p>
+
+
+</div>
+
+<!-- 公共页脚 -->
+<%-include("common/footer")%>
 <!-- 公共页脚 -->
 <script src="<%= script %>"></script>
 </body>
