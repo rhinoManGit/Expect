@@ -2,6 +2,7 @@
 	font-family: "jk-font";
 	src: url('./jk-font.eot');
 	src: url('./jk-font.eot?#iefix') format('eot'),
+		url('./jk-font.woff2') format('woff2'),
 		url('./jk-font.woff') format('woff'),
 		url('./jk-font.ttf') format('truetype'),
 		url('./jk-font.svg#jk-font') format('svg');
@@ -332,103 +333,103 @@
 	content: "\E04E";
 }
 
-.jk-icon-二维码:before {
+.jk-icon-上-2:before {
 	content: "\E04F";
 }
 
-.jk-icon-分析:before {
+.jk-icon-上-3:before {
 	content: "\E050";
 }
 
-.jk-icon-发送:before {
+.jk-icon-上:before {
 	content: "\E051";
 }
 
-.jk-icon-成绩单:before {
+.jk-icon-下-2:before {
 	content: "\E052";
 }
 
-.jk-icon-折线图:before {
+.jk-icon-下-3:before {
 	content: "\E053";
 }
 
-.jk-icon-文件:before {
+.jk-icon-下:before {
 	content: "\E054";
 }
 
-.jk-icon-新建:before {
+.jk-icon-右-2:before {
 	content: "\E055";
 }
 
-.jk-icon-柱状图:before {
+.jk-icon-右-3:before {
 	content: "\E056";
 }
 
-.jk-icon-知识点:before {
+.jk-icon-右:before {
 	content: "\E057";
 }
 
-.jk-icon-试卷:before {
+.jk-icon-左-2:before {
 	content: "\E058";
 }
 
-.jk-icon-针对性训练:before {
+.jk-icon-左-3:before {
 	content: "\E059";
 }
 
-.jk-icon-题库:before {
+.jk-icon-左:before {
 	content: "\E05A";
 }
 
-.jk-icon-饼状图:before {
+.jk-icon-二维码:before {
 	content: "\E05B";
 }
 
-.jk-icon-上-2:before {
+.jk-icon-分析:before {
 	content: "\E05C";
 }
 
-.jk-icon-上-3:before {
+.jk-icon-发送:before {
 	content: "\E05D";
 }
 
-.jk-icon-上:before {
+.jk-icon-成绩单:before {
 	content: "\E05E";
 }
 
-.jk-icon-下-2:before {
+.jk-icon-折线图:before {
 	content: "\E05F";
 }
 
-.jk-icon-下-3:before {
+.jk-icon-文件:before {
 	content: "\E060";
 }
 
-.jk-icon-下:before {
+.jk-icon-新建:before {
 	content: "\E061";
 }
 
-.jk-icon-右-2:before {
+.jk-icon-柱状图:before {
 	content: "\E062";
 }
 
-.jk-icon-右-3:before {
+.jk-icon-知识点:before {
 	content: "\E063";
 }
 
-.jk-icon-右:before {
+.jk-icon-试卷:before {
 	content: "\E064";
 }
 
-.jk-icon-左-2:before {
+.jk-icon-针对性训练:before {
 	content: "\E065";
 }
 
-.jk-icon-左-3:before {
+.jk-icon-题库:before {
 	content: "\E066";
 }
 
-.jk-icon-左:before {
+.jk-icon-饼状图:before {
 	content: "\E067";
 }
 
