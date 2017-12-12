@@ -1,0 +1,493 @@
+@font-face {
+	font-family: "jk-font";
+	src: url('./jk-font.eot');
+	src: url('./jk-font.eot?#iefix') format('eot'),
+		url('./jk-font.woff') format('woff'),
+		url('./jk-font.ttf') format('truetype'),
+		url('./jk-font.svg#jk-font') format('svg');
+}
+
+.jk-icon:before {
+	font-family: "jk-font";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+	text-decoration: none;
+	text-transform: none;
+}
+
+
+.jk-icon-wifi:before {
+	content: "\E001";
+}
+
+.jk-icon-上一步:before {
+	content: "\E002";
+}
+
+.jk-icon-上传-2:before {
+	content: "\E003";
+}
+
+.jk-icon-上传:before {
+	content: "\E004";
+}
+
+.jk-icon-下一步:before {
+	content: "\E005";
+}
+
+.jk-icon-下载-2:before {
+	content: "\E006";
+}
+
+.jk-icon-下载:before {
+	content: "\E007";
+}
+
+.jk-icon-保存:before {
+	content: "\E008";
+}
+
+.jk-icon-全部:before {
+	content: "\E009";
+}
+
+.jk-icon-关闭-2:before {
+	content: "\E00A";
+}
+
+.jk-icon-关闭-2（实心）:before {
+	content: "\E00B";
+}
+
+.jk-icon-关闭:before {
+	content: "\E00C";
+}
+
+.jk-icon-关闭（实心）:before {
+	content: "\E00D";
+}
+
+.jk-icon-分享:before {
+	content: "\E00E";
+}
+
+.jk-icon-分类:before {
+	content: "\E00F";
+}
+
+.jk-icon-切换:before {
+	content: "\E010";
+}
+
+.jk-icon-删减-2:before {
+	content: "\E011";
+}
+
+.jk-icon-删减-3:before {
+	content: "\E012";
+}
+
+.jk-icon-删减:before {
+	content: "\E013";
+}
+
+.jk-icon-删减用户:before {
+	content: "\E014";
+}
+
+.jk-icon-删除-2:before {
+	content: "\E015";
+}
+
+.jk-icon-删除:before {
+	content: "\E016";
+}
+
+.jk-icon-刷新:before {
+	content: "\E017";
+}
+
+.jk-icon-历史:before {
+	content: "\E018";
+}
+
+.jk-icon-右对齐:before {
+	content: "\E019";
+}
+
+.jk-icon-喜欢:before {
+	content: "\E01A";
+}
+
+.jk-icon-图片:before {
+	content: "\E01B";
+}
+
+.jk-icon-失败:before {
+	content: "\E01C";
+}
+
+.jk-icon-对齐:before {
+	content: "\E01D";
+}
+
+.jk-icon-居中对齐:before {
+	content: "\E01E";
+}
+
+.jk-icon-展示:before {
+	content: "\E01F";
+}
+
+.jk-icon-左对齐:before {
+	content: "\E020";
+}
+
+.jk-icon-手机:before {
+	content: "\E021";
+}
+
+.jk-icon-打印:before {
+	content: "\E022";
+}
+
+.jk-icon-搜索:before {
+	content: "\E023";
+}
+
+.jk-icon-放大-2:before {
+	content: "\E024";
+}
+
+.jk-icon-放大:before {
+	content: "\E025";
+}
+
+.jk-icon-文本:before {
+	content: "\E026";
+}
+
+.jk-icon-日期:before {
+	content: "\E027";
+}
+
+.jk-icon-星标-2:before {
+	content: "\E028";
+}
+
+.jk-icon-星标-3:before {
+	content: "\E029";
+}
+
+.jk-icon-星标:before {
+	content: "\E02A";
+}
+
+.jk-icon-标签:before {
+	content: "\E02B";
+}
+
+.jk-icon-标记:before {
+	content: "\E02C";
+}
+
+.jk-icon-正确:before {
+	content: "\E02D";
+}
+
+.jk-icon-消息:before {
+	content: "\E02E";
+}
+
+.jk-icon-添加-2:before {
+	content: "\E02F";
+}
+
+.jk-icon-添加-3:before {
+	content: "\E030";
+}
+
+.jk-icon-添加:before {
+	content: "\E031";
+}
+
+.jk-icon-添加用户:before {
+	content: "\E032";
+}
+
+.jk-icon-用户:before {
+	content: "\E033";
+}
+
+.jk-icon-电:before {
+	content: "\E034";
+}
+
+.jk-icon-电脑:before {
+	content: "\E035";
+}
+
+.jk-icon-电话:before {
+	content: "\E036";
+}
+
+.jk-icon-相机:before {
+	content: "\E037";
+}
+
+.jk-icon-禁止:before {
+	content: "\E038";
+}
+
+.jk-icon-移动:before {
+	content: "\E039";
+}
+
+.jk-icon-筛选:before {
+	content: "\E03A";
+}
+
+.jk-icon-编辑-2:before {
+	content: "\E03B";
+}
+
+.jk-icon-编辑-3:before {
+	content: "\E03C";
+}
+
+.jk-icon-编辑:before {
+	content: "\E03D";
+}
+
+.jk-icon-缩小-2:before {
+	content: "\E03E";
+}
+
+.jk-icon-缩小:before {
+	content: "\E03F";
+}
+
+.jk-icon-群组:before {
+	content: "\E040";
+}
+
+.jk-icon-视频:before {
+	content: "\E041";
+}
+
+.jk-icon-解锁:before {
+	content: "\E042";
+}
+
+.jk-icon-警告:before {
+	content: "\E043";
+}
+
+.jk-icon-讨论:before {
+	content: "\E044";
+}
+
+.jk-icon-设置:before {
+	content: "\E045";
+}
+
+.jk-icon-说明:before {
+	content: "\E046";
+}
+
+.jk-icon-赞:before {
+	content: "\E047";
+}
+
+.jk-icon-退出:before {
+	content: "\E048";
+}
+
+.jk-icon-邮件:before {
+	content: "\E049";
+}
+
+.jk-icon-链接:before {
+	content: "\E04A";
+}
+
+.jk-icon-锁:before {
+	content: "\E04B";
+}
+
+.jk-icon-错误:before {
+	content: "\E04C";
+}
+
+.jk-icon-隐藏:before {
+	content: "\E04D";
+}
+
+.jk-icon-首页:before {
+	content: "\E04E";
+}
+
+.jk-icon-二维码:before {
+	content: "\E04F";
+}
+
+.jk-icon-分析:before {
+	content: "\E050";
+}
+
+.jk-icon-发送:before {
+	content: "\E051";
+}
+
+.jk-icon-成绩单:before {
+	content: "\E052";
+}
+
+.jk-icon-折线图:before {
+	content: "\E053";
+}
+
+.jk-icon-文件:before {
+	content: "\E054";
+}
+
+.jk-icon-新建:before {
+	content: "\E055";
+}
+
+.jk-icon-柱状图:before {
+	content: "\E056";
+}
+
+.jk-icon-知识点:before {
+	content: "\E057";
+}
+
+.jk-icon-试卷:before {
+	content: "\E058";
+}
+
+.jk-icon-针对性训练:before {
+	content: "\E059";
+}
+
+.jk-icon-题库:before {
+	content: "\E05A";
+}
+
+.jk-icon-饼状图:before {
+	content: "\E05B";
+}
+
+.jk-icon-上-2:before {
+	content: "\E05C";
+}
+
+.jk-icon-上-3:before {
+	content: "\E05D";
+}
+
+.jk-icon-上:before {
+	content: "\E05E";
+}
+
+.jk-icon-下-2:before {
+	content: "\E05F";
+}
+
+.jk-icon-下-3:before {
+	content: "\E060";
+}
+
+.jk-icon-下:before {
+	content: "\E061";
+}
+
+.jk-icon-右-2:before {
+	content: "\E062";
+}
+
+.jk-icon-右-3:before {
+	content: "\E063";
+}
+
+.jk-icon-右:before {
+	content: "\E064";
+}
+
+.jk-icon-左-2:before {
+	content: "\E065";
+}
+
+.jk-icon-左-3:before {
+	content: "\E066";
+}
+
+.jk-icon-左:before {
+	content: "\E067";
+}
+
+.jk-icon-上一个:before {
+	content: "\E068";
+}
+
+.jk-icon-下一个:before {
+	content: "\E069";
+}
+
+.jk-icon-停止:before {
+	content: "\E06A";
+}
+
+.jk-icon-展开:before {
+	content: "\E06B";
+}
+
+.jk-icon-循环播放:before {
+	content: "\E06C";
+}
+
+.jk-icon-快进:before {
+	content: "\E06D";
+}
+
+.jk-icon-快退:before {
+	content: "\E06E";
+}
+
+.jk-icon-播放-2:before {
+	content: "\E06F";
+}
+
+.jk-icon-播放:before {
+	content: "\E070";
+}
+
+.jk-icon-暂停-2:before {
+	content: "\E071";
+}
+
+.jk-icon-暂停:before {
+	content: "\E072";
+}
+
+.jk-icon-音标-3:before {
+	content: "\E073";
+}
+
+.jk-icon-音量-2:before {
+	content: "\E074";
+}
+
+.jk-icon-音量-4:before {
+	content: "\E075";
+}
+
+.jk-icon-音量:before {
+	content: "\E076";
+}

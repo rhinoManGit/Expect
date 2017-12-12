@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>极课-前端ICONFONT 图标</title>
+
+    <!-- layout -->
+    <%-include("common/layout_header")%>
+
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        /** 清除内外边距 **/
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+        dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+        pre, /* text formatting elements 文本格式元素 */
+        form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
+        th, td /* table elements 表格元素 */ {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+        address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
+        code, kbd, pre, samp { font-family: courier new, courier, monospace; } /* 统一等宽字体 */
+        small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+        /** 重置列表元素 **/
+        ul, ol { list-style: none; }
+
+        /** 重置文本格式元素 **/
+        a { text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+
+        /** 重置表单元素 **/
+        legend { color: #000; } /* for ie6 */
+        fieldset, img { border: 0; } /* img 搭车：让链接里的 img 无边框 */
+        button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie 下能继承字体大小 */
+        /* 注：optgroup 无法扶正 */
+
+        /** 重置表格元素 **/
+        table { border-collapse: collapse; border-spacing: 0; }
+
+        /* 清除浮动 */
+        .ks-clear:after, .clear:after {
+            content: '\20';
+            display: block;
+            height: 0;
+            clear: both;
+        }
+        .ks-clear, .clear {
+            *zoom: 1;
+        }
+
+        .main {
+            padding: 26px 100px;
+        }
+        .helps{
+            font-size: 14px;
+            margin-top:40px;
+        }
+
+        .helps pre{
+            padding: 20px;
+            margin: 10px 0;
+            background-color: #cecccc;
+            overflow: auto;
+            color: #168479;
+        }
+
+        .icon_lists li{
+            float: left;
+            text-align: center;
+            height: 85px;
+            padding: 0 15px;
+        }
+        .icon_lists .icon{
+            font-size: 24px;
+            margin: 10px 15px;
+            color: #333;
+            -webkit-transition: font-size 0.25s ease-out 0s;
+            -moz-transition: font-size 0.25s ease-out 0s;
+            transition: font-size 0.25s ease-out 0s;
+            margin-left: -10px;
+
+        }
+        .list-title{
+            font-size: 12px;
+            color: #333;
+            padding: 0 0 5px 0;
+            margin: 0 10px;
+            font-weight: 700;
+        }
+        .icon_lists li:hover .icon{
+            font-size: 32px;
+            color: #00BCD4;
+            margin-top: -6px;
+            display: inline-block;
+        }
+        .icon_lists li:hover span{
+            color: #00BCD4;
+        }
+        .fontclass{
+            display: block;
+            height: 0;
+            font-size: 12px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="/iconFont/jkIconFont.css">
+    <style>
+        body{ background: none }
+    </style>
+</head>
+<body>
+<!-- 公共头部 -->
+<%-include("common/header")%>
+
+<div class="main">
+    <div class="icon_lists_contain">
+
+
+        <h3 class="list-title">基础</h3>
+        <ul class="icon_lists clear">
+
+            <li>
+                <i class="icon jk-icon jk-icon-wifi">
+                </i>
+                <span class="fontclass">wifi</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-上一步">
+                </i>
+                <span class="fontclass">上一步</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-上传-2">
+                </i>
+                <span class="fontclass">上传-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-上传">
+                </i>
+                <span class="fontclass">上传</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下一步">
+                </i>
+                <span class="fontclass">下一步</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下载-2">
+                </i>
+                <span class="fontclass">下载-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下载">
+                </i>
+                <span class="fontclass">下载</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-保存">
+                </i>
+                <span class="fontclass">保存</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-全部">
+                </i>
+                <span class="fontclass">全部</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-关闭-2">
+                </i>
+                <span class="fontclass">关闭-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-关闭-2（实心）">
+                </i>
+                <span class="fontclass">关闭-2（实心）</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-关闭">
+                </i>
+                <span class="fontclass">关闭</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-关闭（实心）">
+                </i>
+                <span class="fontclass">关闭（实心）</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-分享">
+                </i>
+                <span class="fontclass">分享</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-分类">
+                </i>
+                <span class="fontclass">分类</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-切换">
+                </i>
+                <span class="fontclass">切换</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删减-2">
+                </i>
+                <span class="fontclass">删减-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删减-3">
+                </i>
+                <span class="fontclass">删减-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删减">
+                </i>
+                <span class="fontclass">删减</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删减用户">
+                </i>
+                <span class="fontclass">删减用户</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删除-2">
+                </i>
+                <span class="fontclass">删除-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-删除">
+                </i>
+                <span class="fontclass">删除</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-刷新">
+                </i>
+                <span class="fontclass">刷新</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-历史">
+                </i>
+                <span class="fontclass">历史</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-右对齐">
+                </i>
+                <span class="fontclass">右对齐</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-喜欢">
+                </i>
+                <span class="fontclass">喜欢</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-图片">
+                </i>
+                <span class="fontclass">图片</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-失败">
+                </i>
+                <span class="fontclass">失败</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-对齐">
+                </i>
+                <span class="fontclass">对齐</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-居中对齐">
+                </i>
+                <span class="fontclass">居中对齐</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-展示">
+                </i>
+                <span class="fontclass">展示</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-左对齐">
+                </i>
+                <span class="fontclass">左对齐</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-手机">
+                </i>
+                <span class="fontclass">手机</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-打印">
+                </i>
+                <span class="fontclass">打印</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-搜索">
+                </i>
+                <span class="fontclass">搜索</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-放大-2">
+                </i>
+                <span class="fontclass">放大-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-放大">
+                </i>
+                <span class="fontclass">放大</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-文本">
+                </i>
+                <span class="fontclass">文本</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-日期">
+                </i>
+                <span class="fontclass">日期</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-星标-2">
+                </i>
+                <span class="fontclass">星标-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-星标-3">
+                </i>
+                <span class="fontclass">星标-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-星标">
+                </i>
+                <span class="fontclass">星标</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-标签">
+                </i>
+                <span class="fontclass">标签</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-标记">
+                </i>
+                <span class="fontclass">标记</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-正确">
+                </i>
+                <span class="fontclass">正确</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-消息">
+                </i>
+                <span class="fontclass">消息</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-添加-2">
+                </i>
+                <span class="fontclass">添加-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-添加-3">
+                </i>
+                <span class="fontclass">添加-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-添加">
+                </i>
+                <span class="fontclass">添加</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-添加用户">
+                </i>
+                <span class="fontclass">添加用户</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-用户">
+                </i>
+                <span class="fontclass">用户</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-电">
+                </i>
+                <span class="fontclass">电</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-电脑">
+                </i>
+                <span class="fontclass">电脑</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-电话">
+                </i>
+                <span class="fontclass">电话</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-相机">
+                </i>
+                <span class="fontclass">相机</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-视频">
+                </i>
+                <span class="fontclass">视频</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-禁止">
+                </i>
+                <span class="fontclass">禁止</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-移动">
+                </i>
+                <span class="fontclass">移动</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-筛选">
+                </i>
+                <span class="fontclass">筛选</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-编辑-2">
+                </i>
+                <span class="fontclass">编辑-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-编辑-3">
+                </i>
+                <span class="fontclass">编辑-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-编辑">
+                </i>
+                <span class="fontclass">编辑</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-缩小-2">
+                </i>
+                <span class="fontclass">缩小-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-缩小">
+                </i>
+                <span class="fontclass">缩小</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-群组">
+                </i>
+                <span class="fontclass">群组</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-解锁">
+                </i>
+                <span class="fontclass">解锁</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-警告">
+                </i>
+                <span class="fontclass">警告</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-讨论">
+                </i>
+                <span class="fontclass">讨论</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-设置">
+                </i>
+                <span class="fontclass">设置</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-说明">
+                </i>
+                <span class="fontclass">说明</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-赞">
+                </i>
+                <span class="fontclass">赞</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-退出">
+                </i>
+                <span class="fontclass">退出</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-邮件">
+                </i>
+                <span class="fontclass">邮件</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-链接">
+                </i>
+                <span class="fontclass">链接</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-锁">
+                </i>
+                <span class="fontclass">锁</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-错误">
+                </i>
+                <span class="fontclass">错误</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-隐藏">
+                </i>
+                <span class="fontclass">隐藏</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-首页">
+                </i>
+                <span class="fontclass">首页</span>
+            </li>
+
+        </ul>
+
+
+        <h3 class="list-title">教学动作</h3>
+        <ul class="icon_lists clear">
+
+            <li>
+                <i class="icon jk-icon jk-icon-二维码">
+                </i>
+                <span class="fontclass">二维码</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-分析">
+                </i>
+                <span class="fontclass">分析</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-发送">
+                </i>
+                <span class="fontclass">发送</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-成绩单">
+                </i>
+                <span class="fontclass">成绩单</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-折线图">
+                </i>
+                <span class="fontclass">折线图</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-文件">
+                </i>
+                <span class="fontclass">文件</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-新建">
+                </i>
+                <span class="fontclass">新建</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-柱状图">
+                </i>
+                <span class="fontclass">柱状图</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-知识点">
+                </i>
+                <span class="fontclass">知识点</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-试卷">
+                </i>
+                <span class="fontclass">试卷</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-针对性训练">
+                </i>
+                <span class="fontclass">针对性训练</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-题库">
+                </i>
+                <span class="fontclass">题库</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-饼状图">
+                </i>
+                <span class="fontclass">饼状图</span>
+            </li>
+
+        </ul>
+
+
+        <h3 class="list-title">箭头</h3>
+        <ul class="icon_lists clear">
+
+            <li>
+                <i class="icon jk-icon jk-icon-上-2">
+                </i>
+                <span class="fontclass">上-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-上-3">
+                </i>
+                <span class="fontclass">上-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-上">
+                </i>
+                <span class="fontclass">上</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下-2">
+                </i>
+                <span class="fontclass">下-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下-3">
+                </i>
+                <span class="fontclass">下-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下">
+                </i>
+                <span class="fontclass">下</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-右-2">
+                </i>
+                <span class="fontclass">右-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-右-3">
+                </i>
+                <span class="fontclass">右-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-右">
+                </i>
+                <span class="fontclass">右</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-左-2">
+                </i>
+                <span class="fontclass">左-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-左-3">
+                </i>
+                <span class="fontclass">左-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-左">
+                </i>
+                <span class="fontclass">左</span>
+            </li>
+
+        </ul>
+
+
+        <h3 class="list-title">音频控制</h3>
+        <ul class="icon_lists clear">
+
+            <li>
+                <i class="icon jk-icon jk-icon-上一个">
+                </i>
+                <span class="fontclass">上一个</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-下一个">
+                </i>
+                <span class="fontclass">下一个</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-停止">
+                </i>
+                <span class="fontclass">停止</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-展开">
+                </i>
+                <span class="fontclass">展开</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-循环播放">
+                </i>
+                <span class="fontclass">循环播放</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-快进">
+                </i>
+                <span class="fontclass">快进</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-快退">
+                </i>
+                <span class="fontclass">快退</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-播放-2">
+                </i>
+                <span class="fontclass">播放-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-播放">
+                </i>
+                <span class="fontclass">播放</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-暂停-2">
+                </i>
+                <span class="fontclass">暂停-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-暂停">
+                </i>
+                <span class="fontclass">暂停</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-音标-3">
+                </i>
+                <span class="fontclass">音标-3</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-音量-2">
+                </i>
+                <span class="fontclass">音量-2</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-音量-4">
+                </i>
+                <span class="fontclass">音量-4</span>
+            </li>
+
+            <li>
+                <i class="icon jk-icon jk-icon-音量">
+                </i>
+                <span class="fontclass">音量</span>
+            </li>
+
+        </ul>
+
+    </div>
+    <div class="helps">
+        第一步：使用font-face声明字体
+            <pre>
+            @font-face {
+                font-family: "jk-font";
+                src: url('./jk-font.eot');
+                src: url('./jk-font.eot?#iefix') format('eot'),
+                    url('./jk-font.woff') format('woff'),
+                    url('./jk-font.ttf') format('truetype'),
+                    url('./jk-font.svg#jk-font') format('svg');
+            }
+</pre>
+        第二步：定义使用iconfont的样式
+            <pre>
+.jk-icon{
+    font-family:"jk-font" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
+</pre>
+        第三步：挑选相应图标并获取相应class，应用于页面,【jk-icon-xxxx】=【jk-icon-】前缀+【每个图标对应的class】
+<pre>
+&lt;i class="jk-icon gm-xxxx"&gt;&lt;/i&gt;
+</pre>
+    </div>
+    <p style="color: grey"></p>
+</div>
+
+<!-- 公共页脚 -->
+<%-include("common/footer")%>
+</body>
+</html>

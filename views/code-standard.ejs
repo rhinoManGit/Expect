@@ -94,6 +94,39 @@
         <img src="/app/img/dir-structure.png">
     </p>
 
+    <h1>common库目录结构</h1>
+    <p>
+        <img src="/app/img/common-dir.png">
+    </p>
+
+    <h1>架构第一版会改变什么，带来哪些好处</h1>
+    <p>1，目录结构统一，构建统一，不会再出现每个项目一套结构的情况，对于任何一端的构建问题大家都能同样对待，学习一套构建就可以解决各端问题；</p>
+    <p>2，配置统一，统一接口配置。所有的接口配置统一在了url.js 文件中</p>
+    <p>3，抽取公共文件，对于第三方插件都统一到了common中抽取维护</p>
+    <p>4，脚本和view分离，这个架构中我们会将脚本和html分离，为后期的静态资源直接发布到cdn做准备。</p>
+
+    <h1>main.js中页面对应的脚本引入规则,减少请求数</h1>
+    <p>
+        <img src="/app/img/require-js.png">
+    </p>
+    <p>Eg.</p>
+    <p class="item">
+        <img src="/app/img/require-demo.png">
+    </p>
+
+    <h1>当前的实体向后兼容</h1>
+    <p>所有的实体都之间在service中require,后面即使有变动，之间看看这个service的头部就知道依赖了哪些实体</p>
+
+    <h1>关于html & js中的路径写法</h1>
+    <p class="tip">因为我们的项目存在几个地址，比如报表的有V1，v2等，所以我们不管在html中还是在js中都写路径的时候写相对路径</p>
+    <p class="item">src="dest/js/main.js"</p>
+    <p class="item">["dest/js/demo.css"]</p>
+    <p class="tip">不要这样写（会限制死）：</p>
+    <p class="item">src="/dest/js/main.js"</p>
+    <p class="item">src="report/dest/js/main.js"</p>
+    <p class="item">src="/report/dest/js/main.js"</p>
+    <p class="item">["/dest/js/demo.css"]</p>
+    <p class="item">["report/dest/js/demo.css"]</p>
 </div>
 
 <!-- 公共页脚 -->

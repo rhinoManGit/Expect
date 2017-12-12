@@ -195,4 +195,19 @@ Action['codestandard-html'] = function(req, res, next){
     res.render('code-standard-html', codeStandardModel);
 }
 
+/*
+ * 字体图标
+ * */
+Action['icon-template'] = function(req, res, next){
+
+    var o = {
+        pageName: 'codeStandard',
+        title: '极课前端代码规范',
+        tab: "icon"
+    }
+
+    res.render('icon-template', o);
+}
+
+
 module.exports = new Index();

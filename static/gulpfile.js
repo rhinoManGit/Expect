@@ -1,320 +1,287 @@
-﻿/**
- * Created by wd14931 on 2016/1/4.
- * commond:
- *  less: 编译所有的less
- *
- */
-'use strict';
-
-var http = require('http');
-var iconv = require('iconv-lite');
-var querystring = require('querystring');
-var gulp = require('gulp');
-var less = require('gulp-less');
-var watch = require('gulp-watch');
-var notify = require('gulp-notify');
-var plumber = require('gulp-plumber');
-var source = require('vinyl-source-stream');
-var watchify = require('watchify');
-var browserify = require('browserify');
-var sourcemaps = require('gulp-sourcemaps');
-var assign = require('lodash.assign');
-var buffer = require('vinyl-buffer');
-var gutil = require('gulp-util');
-var minifycss = require('gulp-minify-css');
-var uglify = require('gulp-uglify');
-var rev = require('gulp-rev');
-var replace = require('gulp-replace');
-var del = require('del');
-var glob = require('glob');
-var path = require('path');
-var sftp = require('gulp-sftp');
-var base64 = require('gulp-base64');
-var fs = require('fs');
-//var tmodjs = require('tmodjs');
+﻿// 引入 gulp
+var gulp         = require('gulp');
+var fs           = require('fs');
+var sass         = require('gulp-sass');
+var uglify       = require('gulp-uglify');
+var rev          = require('gulp-rev');
+var del          = require('del');
+var glob         = require('glob');
+var notify       = require('gulp-notify');
+var gutil        = require('gulp-util');
+var base64       = require('gulp-base64');
+var watch        = require('gulp-watch');
+var replace      = require('gulp-replace');
+var minCss       = require('gulp-minify-css');
+var browserify   = require('gulp-browserify');
+var iconfont     = require('gulp-iconfont');
+var iconfontCss  = require('gulp-iconfont-css');
 
 var tpl = {
-    name: 'rhino',
-    imgRoot:"",
-    illegal: /alert\(/g,
-    to: 'wd14931@ly.com'
+    illegal: /(alert|console\.(log|error|warn|info))\(/g
 };
 
-// 报错抛出提示
-var onError = function (err) {
-    gutil.log('======= ERROR. ========\n');
-    notify.onError("ERROR: " + err.message)(err); // for growl
-    gutil.beep();
-};
+/*
+ *
+ * read json
+ *
+ * */
+function readJson(fileName){
 
-// 首次进来先获取缓存数据存起来
-var /*cacheJSON  = require('./cache.json'),
-    */bUpload = {},
-    bConfig = {};
+    var json = JSON.parse(fs.readFileSync(fileName));
 
-var _listen = function(obj, prop, fn){
+    return json;
+}
 
-    return Object.defineProperty(obj, prop, {
-        get: function(){
-            return this['_'+prop];
-        },
-        set: function(newValue){
+/*
+ * icon font
+ *
+ * */
+function IconFont(callback){
 
-            if(this['_'+prop] !== newValue){
-                this['_'+prop] = newValue;
-                fn(newValue);
+    return gulp.src('iconFont/svg/**/*.svg')
+        .pipe(iconfontCss({
+            fontName: 'jk-font',
+            cssClass: 'jk-icon',
+            targetPath: 'jkIconFont.css',
+            fixedCodepoints:{
+                "保存": 'E089',
+                "编辑": 'E087'
             }
+        }))
+        .pipe(iconfont({
+            fontName: 'jk-font',
+            formats: ['ttf', 'eot', 'woff', 'svg']
+        }))
+        .pipe(gulp.dest('icon/font'))
+        .on('finish', callback);
+}
+
+/*
+ *
+ * */
+function CdnImg(callback) {
+
+    return gulp.src('./images/**/*')
+        .pipe(rev())
+        .pipe(gulp.dest('./output/images'))
+        .pipe(rev.manifest('img.json', {
+            base: 'output',
+            merge: true // merge with the existing manifest (if one exists)
+        }))
+        .pipe(gulp.dest('./output/images'))
+        .on('finish', callback);
+}
+
+/*
+ *
+ * base64
+ *
+ * */
+function ImgIncodeBybase64(callback){
+
+    glob('./dest/css/*.css', {}, function (err, files) {
+
+        if(err){
+            return gutil.log(gutil.colors.red('ERROR: in imgIncodeBybase64!'));
         }
-    });
-};
 
-// 监听上传状态
-_listen(bUpload, 'cursor', updateCache);
-bUpload['cursor'] = 0;
-// 监听上传状态
-_listen(bConfig, 'update', updateConfigHandle);
-bConfig['update'] = 0;
+        return gulp.src(files)
+            .pipe(base64({
+                extensions: [/^["']?(\.\/)?\.\.\/\.\.\/images\/(.*?).(png|jpg|gif)["']?$/i],
+                maxImageSize: 8*1024, // bytes
+                debug: false
+            }))
+            .pipe(gulp.dest('./dest/css'))
+            .on('finish', callback);
+    });
+}
+
 /*
- * upload
- * 首先会先判断有没有文件上传
- * 如果有：才去连接， 否则不连接
  *
  * */
-function upload(cfg, callback){
+function MinCss(callback) {
 
-    if(!cfg.files.length)
-        cfg.files = 'thetcbestfrontteam/*.gnyfrontteam';
+    return gulp.src('./dest/css/**/*.css')
+        .pipe(minCss())
+        .pipe(gulp.dest('./dest/css'))
+        .on('finish', callback);
+}
 
-    return gulp.src(cfg.files)
-        .pipe(sftp({
-            host: cfg.host || '',
-            port: cfg.port || '',
-            auth: cfg.auth || '',
-            remotePath: cfg.path,
-            callback: function(){
-                gutil.log(gutil.colors.green(cfg.log) + gutil.colors.yellow(' SFTP connection is closed.'));
-            }
+/*
+ *
+ * */
+function CdnCss(callback) {
+
+    return gulp.src('./dest/css/*.css')
+        .pipe(rev())
+        .pipe(gulp.dest('./output/css'))
+        .pipe(rev.manifest('css.json', {
+            base: 'output',
+            merge: true // merge with the existing manifest (if one exists)
         }))
-        .on('error', function(e){
-            gutil.log(gutil.colors.red(e.message));
+        .pipe(gulp.dest('./output/css'))
+        .on('finish', callback);
+}
 
-            throw 'User name or password is incorrect! please stop!!';
-        })
+/*
+ * replaceUrl
+ * */
+function ReplaceUrl(callback){
+
+    var imgJson  = readJson('./output/img.json'),
+        imgValid =  [];
+
+    return gulp.src('./dest/css/*.css')
+        .pipe(replace(/url\(["']?(.\/)?\.\.\/\.\.\/images\/(.*?)["']?\)/gi, function(match, p0, p1) {
+
+            if(!imgJson[p1])
+                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
+            else
+                imgValid.push(imgJson[p1]);
+
+            return 'url(../images/' + imgJson[p1] + ')';
+        }))
+        .pipe(gulp.dest('./dest/css/'))
         .on('finish', function(){
-            callback && callback();
-        });
-}
 
-function buildCss(styleSrc){
-    gulp.src(styleSrc, {client: './'})
-        .pipe(plumber({errorHandler: onError}))
-        .pipe(less())
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./app/dest/css'))
-        .on('finish', function(){});
-}
+            glob('./output/images/*', {}, function (err, files) {
+                files.forEach(function(f){
 
-// require编译
-function bundle(b, file) {
-    return b.bundle()
-        .on("error", notify.onError(function (error) {
-            gutil.log('======= ERROR. ========\n', error);
-            return "Message to the notifier: " + error.message;
-        }))
-        .pipe(source(file))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./app/dest/js'));
-}
-
-
-/*function tmodjsTask(callback){
-
-    var tmod = new tmodjs("app/tpl", {
-        type: "commonjs",
-        minify: false,
-        cache: false
-    });
-
-    tmod.watch();
-    callback();
-}*/
-
-// 根据变动生成css与js
-function buildCssAndJs(){
-
-    watch('app/src/**/!(_)*.less',function(event) {
-
-        var path = event.path.replace(/\\/g, '/'),
-            reg = path.match(/(\/app\/src(\/\w+)*)?\/([\w]+.less)?$/),
-            src = reg[0];
-
-        buildCss(src.substring(1));
-        gutil.log(gutil.colors.green("SUCCESS: " + src.substring(1) + '  finished!'));
-
-    });
-
-    watch(['app/src/**/!(_)*.js'],function(event) {
-
-        var path = event.path.replace(/\\/g, '/');
-
-        var reg = path.match(/\/((app\/(src|tpl\/build)\/(\w+)*)?\/([\w]+.js))?$/),
-            src = reg[1],
-            fileName = reg[5];
-
-
-        var b = watchify(browserify(assign({}, watchify.args, {
-            cache: {},
-            packageCache: {},
-            entries: [src]
-        })));
-
-        b.on('log', gutil.log);
-
-        bundle(b, fileName);
-
-        return;
-    });
-
-}
-
-/*
- 编译所有的less
- */
-function Less(callback){
-
-    glob('app/src/**/!(_)*.less', {}, function (err, files) {
-
-        files.forEach(function (file) {
-
-            buildCss(file);
-
-            gutil.log(gutil.colors.green("SUCCESS: " + file + '  finished!'));
-
-        });
-
-        callback();
-    });
-}
-
-
-/*
- 编译所有的js
- 注：执行此命令的时候请注释掉下面的 [default]任务行
- */
-function reset(callback){
-
-    glob('app/src/**/!(_)*.js', {}, function (err, files) {
-
-        files.forEach(function (file) {
-
-            var reg = file.match(/(app\/src\/(\w+)*)?\/([\w]+.js)?$/),
-                fileName = reg[3];
-
-            var b = browserify();
-
-            b.add(file);
-            b.bundle()
-                .on("error", function (error) {
-                    gutil.log(gutil.colors.red('BUILD_ERROR: '+error.message));
+                    if(imgValid.indexOf(f.split('/').pop()) === -1)
+                        fs.unlinkSync(f);
                 })
-                .pipe(fs.createWriteStream('./app/dest/js/'+ fileName));
+            })
 
-            gutil.log(gutil.colors.green("SUCCESS: " + file + '  finished!'));
-
+            callback()
         });
-    });
-
-    callback();
-}
-
-
-/**
- *  gulp build
- */
-
-/*
- * clean output
- * */
-function clean(callback){
-    del.sync(['app/output/**', '!app/output']);
-    callback();
-}
-/*
- * clean uplod.json
- * */
-function cleanUpload(callback) {
-    writeJson('./upload.json', []);
-    callback();
 }
 
 /*
- *
- * img CDN
+ * replaceUrl
  * */
-function cdnImg(callback){
+function ReplaceJsUrl(callback){
 
-    glob('app/img/*', {}, function (err, files) {
+    var jsJson  = readJson('./output/js.json');
 
-        // addCDN
-        return gulp.src(files)
-            .pipe(rev())
-            .pipe(gulp.dest('./app/output/img'))
-            .pipe(rev.manifest('img.json', {
-                base: './output',
-                merge: true // merge with the existing manifest (if one exists)
-            }))
-            .pipe(gulp.dest('./app/output/img'))
-            .on('finish', callback);
-    });
+    // 因为路由都会写在route中，所以只处理这个路由
+    return gulp.src('./output/js/main-*.js')
+        .pipe(replace(/["'](.\/)?dest\/js\/(.*?\.js)["']/gi, function(match, p0, p1, p2) {
+
+            if(!jsJson[p1])
+                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
+
+            return match.replace('dest/js', 'js').replace(p1, jsJson[p1])
+        }))
+        .pipe(gulp.dest('./output/js'))
+        .on('finish', callback);
+}
+/*
+ * replaceUrl
+ * */
+function ReplaceCssUrl(callback){
+
+    var cssJson  = readJson('./output/css.json');
+
+    // 因为路由都会写在route中，所以只处理这个路由
+    return gulp.src('./output/js/main-*.js')
+
+        .pipe(replace(/["'](.\/)?dest\/css\/(.*?\.css)["']/gi, function(match, p0, p1, p2) {
+
+            if(!cssJson[p1])
+                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
+
+            return match.replace('dest/css', 'css').replace(p1, cssJson[p1])
+        }))
+        .pipe(gulp.dest('./output/js'))
+        .on('finish', callback);
 }
 
 /*
- *
- * js CDN
- *
+ * replaceUrl
  * */
-function cdnJs(callback){
+function ReplaceHtmlCssUrl(callback){
 
-    glob('app/min/js/*.js', {}, function (err, files) {
+    var cssJson  = readJson('./output/css.json');
 
-        // addCDN
-        return gulp.src(files)
-            .pipe(rev())
-            .pipe(gulp.dest('./app/output/js'))
-            .pipe(rev.manifest('js.json', {
-                base: './output',
-                merge: true // merge with the existing manifest (if one exists)
-            }))
-            .pipe(gulp.dest('./app/output/js'))
-            .on('finish', callback);
-    });
+    return gulp.src('./output/**/*.html')
+
+        .pipe(replace(/href=["']?(.\/)?dest\/css\/(.*?\.css)["']/gi, function(match, p0, p1, p2) {
+
+            if(!cssJson[p1])
+                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
+
+            return match.replace('dest/css', 'css').replace(p1, cssJson[p1])
+        }))
+        .pipe(gulp.dest('./output'))
+        .on('finish', callback);
 }
 
 /*
- *
- * minCss
- *
+ * html jsURL
  * */
+function ReplaceHtmlJsUrl(callback){
 
-function minCss(callback){
-    return gulp.src('./app/dest/css/*.css')
-        .pipe(minifycss())
-        .pipe(gulp.dest('app/min/css'))
+    var jsJson  = readJson('./output/js.json');
+
+    return gulp.src('./output/**/*.html')
+
+        .pipe(replace(/src=["']?(.\/)?dest\/js\/(.*?\.js)["']/gi, function(match, p0, p1, p2) {
+
+            if(!jsJson[p1])
+                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
+
+            return match.replace('dest/js', 'js').replace(p1, jsJson[p1])//"src='" + p1 + '/js/' + jsJson[p2] + "'";
+        }))
+        .pipe(gulp.dest('./output'))
+        .on('finish', callback);
+}
+
+/*
+ * 合并，压缩文件
+ * */
+function CompressJs(callback) {
+
+    return gulp.src('./dest/js/*.js')
+        .pipe(uglify({
+            mangle: false
+        }))
+        .pipe(gulp.dest('./dest/js'))
         .on('finish', callback);
 }
 
 /*
  *
- * compress
+ * */
+function CdnJs(callback) {
+
+    return gulp.src('./dest/js/*.js')
+        .pipe(rev())
+        .pipe(gulp.dest('./output/js'))
+        .pipe(rev.manifest('js.json', {
+            base: 'output',
+            merge: true // merge with the existing manifest (if one exists)
+        }))
+        .pipe(gulp.dest('./output/js'))
+        .on('finish', callback);
+}
+
+/*
  *
  * */
-function compress(callback){
-    return gulp.src('app/dest/js/*.js')
-        .pipe(uglify())
-        .pipe(gulp.dest('app/min/js'))
+function MoveHtml(callback) {
+
+    return gulp.src(['./!(component)*/**/*.html', './*.html'])
+        .pipe(gulp.dest('output'))
         .on('finish', callback);
+}
+
+/*
+ *
+ * */
+function Clean(callback) {
+
+    del.sync('./output');
+    callback()
 }
 
 /*
@@ -322,9 +289,9 @@ function compress(callback){
  * find illegal in content
  * */
 
-function findIllegalChar(callback){
+function FindIllegalChar(callback){
 
-    return gulp.src("app/min/js/*.js")
+    return gulp.src("./questions/js/**/*.js")
         .pipe(notify(function (file) {
 
             var fileName = file.relative;
@@ -336,423 +303,147 @@ function findIllegalChar(callback){
                 return gutil.colors.yellow('Found ' + aIllegal + ' in ' + fileName);
             }
         }))
+        .pipe(gulp.dest('./questions/js'))
         .on('finish', callback);
 }
 
-/*
- *
- * replaceUrl
- *
- * */
-function replaceUrl(callback){
+function _BuildJs(src, cb){
 
-    var imgJson = readJson('app/output/img.json'),
-        aUploading = [];
-
-    return gulp.src(['app/min/css/*.css'])
-        .pipe(replace(/url\(["']?\.\.\/\.\.\/img\/(.*?)["']?\)/gi, function(match, p1) {
-
-            if(!imgJson[p1]){
-                gutil.log(gutil.colors.red('ERROR: '+p1 + ' is missing'));
-            }
-
-            // 生成img的到上传列表
-            if(!cacheJSON[p1] || cacheJSON[p1] !== imgJson[p1]){
-                aUploading.indexOf(p1) === -1 && aUploading.push(p1);
-            }
-
-            return 'url(' + tpl.imgRoot + imgJson[p1] + ')';
+    return gulp.src(src)
+        .pipe(browserify({
+            insertGlobals : false,
+            debug : false,
+            transform: [
+                [
+                    "file2ify",
+                    {
+                        "extension": [
+                            "html",
+                            "css",
+                            "json",
+                            "ejs"
+                        ]
+                    }
+                ]
+            ]
         }))
-        .pipe(rev())
-        .pipe(gulp.dest('./app/output/css'))
-        .pipe(rev.manifest('css.json', {
-            base: './output',
-            merge: true // merge with the existing manifest (if one exists)
+        .pipe(gulp.dest(function (f) {
+            return 'dest/js';
         }))
-        .pipe(gulp.dest('app/output/css'))
-        .on('finish', function(){
+        .on('finish', cb);
+}
 
-            fs.writeFile('upload.json', JSON.stringify(aUploading, null, 4), callback);
-            callback();
-        });
+function CompileCss(callback) {
+
+    return gulp.src(['./src/**/[!_]?*.scss', './common/**/*.scss'])
+        .pipe(sass())
+        .pipe(gulp.dest(function (f) {
+            f.dirname = 'css';
+            return 'dest/css';
+        }))
+        .on('finish', callback);
+}
+
+function CompileJs(callback) {
+
+    glob('./{common,src}/**/[!_]?*.js', {}, function (err, files) {
+
+        files.forEach(function(f){
+
+            gutil.log(gutil.colors.cyan(`Build ${f} Is Ok!`));
+
+            _BuildJs(f, callback);
+        })
+    })
 }
 
 /*
  *
- * base64
- *
  * */
-function imgIncodeBybase64(callback){
+function WatchCss(callback){
 
-    glob('./app/min/css/*.css', {}, function (err, files) {
+    watch(['./src/**/*.scss', './common/**/*.scss'], function (event) {
 
-        if(err){
-            return gutil.log(gutil.colors.red('ERROR: in imgIncodeBybase64!'));
-        }
+        var src = event.path.toString().split(event.cwd.toString())[1].replace(/\\/g, '/'),
+            aPath    = src.split('/'),
+            fileName = aPath.pop(),
+            sPath    = aPath.join('/');
 
-        return gulp.src(files)
-            .pipe(base64({
-                extensions: [/^["']?\.\.\/\.\.\/img\/(.*?).(png|jpg|gif)["']?$/i],
-                maxImageSize: 8*1024, // bytes
-                debug: false
+        gutil.log(gutil.colors.cyan(`${sPath + '/' + fileName}`));
+
+        if(/^_/g.test(fileName))
+            sPath += '/[!_]?*.scss';
+        else
+            sPath += '/' + fileName;
+
+        return gulp.src('./' + sPath)
+            .pipe(sass())
+            .pipe(gulp.dest(function (f) {
+                f.dirname = 'dest/css';
+                return 'dest/css';
             }))
-            .pipe(gulp.dest('app/min/css'))
             .on('finish', callback);
     });
-}
 
-/*
- *
- * update wechat
- *
- * */
-function update(callback){
-
-    var sFile = {
-        js: {},
-        css:{}
-    };
-    var json = readJson('app/output/js.json');
-
-    for(var k in json){
-        sFile.js[k.replace('.js', '')] = json[k];
-    }
-
-    var cssJson = readJson('app/output/css.json');
-
-    for(var j in cssJson){
-        sFile.css[j.replace('.css', '')] = cssJson[j];
-    }
-
-    // 删除
-    del.sync(['app/min/**']);
-
-    writeJson('app/output/usemin.json', sFile);
-    /**************/
     callback();
 }
 
 /*
- * 生成上传列表
  *
  * */
-function uploadList(callback){
+function WatchJs(callback){
 
-    fs.readFile('upload.json', 'utf8', function(err, data){
+    watch(['./src/**/*.js', './common/**/*.js', './component/**/*.js'], function (event) {
 
-        if(err){
-            return gutil.log(gutil.colors.red('ERROR: updateCache error!'));
-        }
+        var src = event.path.toString().split(event.cwd.toString())[1].replace(/\\/g, '/'),
+            aPath    = src.split('/'),
+            fileName = aPath.pop(),
+            sPath    = aPath.join('/');
 
-        var aUploading = JSON.parse(data);
+        gutil.log(gutil.colors.cyan(`${sPath + '/' + fileName}`));
 
-        fs.readFile('app/output/js.json', 'utf8', function(err, data){
-
-            if(err){
-                return gutil.log(gutil.colors.red('ERROR: updateCache error!'));
-            }
-
-            var jsJson = JSON.parse(data);
-
-            for(var k in jsJson){
-
-                if(!cacheJSON[k] || cacheJSON[k] !== jsJson[k]){
-                    aUploading.push(k);
-                }
-            }
-
-            fs.readFile('app/output/css.json', 'utf8', function(err, data){
-
-                if(err){
-                    return gutil.log(gutil.colors.red('ERROR: updateCache error!'));
-                }
-
-                var cssJson = JSON.parse(data);
-
-                for(var i in cssJson){
-
-                    if(!cacheJSON[i] || cacheJSON[i] !== cssJson[i]){
-                        aUploading.push(i);
-                    }
-                }
-
-                fs.writeFile('upload.json', JSON.stringify(aUploading, null, 4), callback);
-            });
-        });
-    });
-}
-
-
-/*
- *
- * FTP Part
- *
- * */
-
-/*
- *
- * read json
- *
- * */
-function readJson(fileName){
-    var json = JSON.parse(fs.readFileSync(fileName));
-
-    return json;
-}
-
-/*
- *
- * write json
- *
- * */
-function writeJson(fileName, data){
-
-    fs.writeFileSync(fileName, JSON.stringify(data));
-}
-
-/*
- *
- * find upload file
- *
- * */
-function findUploadFile(destFile, reg, prefix){
-
-    var json = readJson('upload.json');
-    var imgJson = readJson(destFile);
-
-    var reg = reg || /(.png|.jpg|.gif)$/;
-
-    json = json.filter(function(f){
-
-        return reg.test(f);
-    });
-
-    json = json.map(function(f){
-        return prefix + imgJson[f];
-    });
-
-    return json;
-}
-
-/*
- *
- * FTP Part
- *
- * */
-function serverImgA(callback){
-
-    var aFile = findUploadFile('app/output/img.json', false, 'app/output/img/');
-
-    return uploadFile({
-        src: aFile,
-        lib: 'feresource',
-        outputDir: 'gny-img/touch'
-    }, function(){
-        bUpload['cursor']++;
-        callback();
-    });
-}
-
-/* js */
-function serverJsA(callback){
-
-    var aFile = findUploadFile('app/output/js.json', /.js$/, 'app/output/js/');
-
-	aFile.forEach(function(f){
-        aFile.push('app/dest/js/' + f.split('/').pop().split('-')[0]+ '.js')
-    })
-    
-    return uploadFile({
-        src: aFile,
-        lib: 'feresource',
-        outputDir: 'gny-js/touch'
-    }, function(){
-        bUpload['cursor']++;
-        callback();
-    });
-}
-
-/* css */
-function serverCssA(callback){
-
-    var aFile = findUploadFile('app/output/css.json', /.css$/, 'app/output/css/');
-
-    return uploadFile({
-        src: aFile,
-        lib: 'feresource',
-        outputDir: 'gny-css/touch'
-    }, function(){
-        bUpload['cursor']++;
-        callback();
-    });
-}
-
-/*
- * 更新缓存
- * */
-function updateCache(callback){
-
-    if(bUpload['cursor'] < 3){
-        return;
-    }
-
-    var cache = {};
-
-    var cssJson = readJson('app/output/css.json');
-
-    for(var k in cssJson){
-        cache[k] = cssJson[k];
-    }
-
-    var jsJson = readJson('app/output/js.json');
-
-    for(var k in jsJson){
-        cache[k] = jsJson[k];
-    }
-
-    var imgJson = readJson('app/output/img.json');
-
-    for(var k in imgJson){
-        cache[k] = imgJson[k];
-    }
-
-    fs.writeFile('cache.json', JSON.stringify(cache, null, 4), function(){
-
-        writeJson('./upload.json', []);
-
-    });
-}
-
-/*
-* 更新配置手柄
-*
-* */
-function updateConfigHandle(){
-
-    if(bConfig['update'] - 0 === 0){
-        return;
-    }
-
-    var userList = [''];
-
-    if(userList.indexOf(process.env['USERNAME']) === -1){
-        return gutil.log(gutil.colors.red('抱歉！发布权限不够！'));
-    }
-
-    var sValue = fs.readFileSync('./app/output/usemin.json').toString();
-
-    var data = {
-        "key": "fe_resource_touch",
-        "value": sValue
-    };
-
-    var content = querystring.stringify(data);
-
-    gutil.log(gutil.colors.green(sValue))
-
-    var req = http.request(opt, function (res) {
-
-        var chunks = [];
-        var size = 0;
-
-        // 请求回流
-        res.on('data', function (chunk) {
-
-            chunks.push(chunk)
-            size += chunk.length;
-        });
-
-        // res 结束
-        res.on('end', function () {
-
-            var buf = Buffer.concat(chunks, size);
-            var str = iconv.decode(buf, 'utf-8');
-
-            gutil.log('统一配置更新：',gutil.colors.green(str));
-        });
-    });
-
-    req.on('error', function (e) {
-
-        gutil.log(gutil.colors.red('统一配置 error：', e));
-
-    });
-
-    req.write(content);
-    req.end();
-}
-
-/*
-* 更新配置文件
-*
-* */
-function updateConfig(callback){
-
-    /*
-    * 询问
-    * */
-    process.stdin.resume();
-    process.stdin.setEncoding('utf8');
-
-    gutil.log(gutil.colors.yellow('请确认后端资源已经发布。你确定要更新配置: yes or no ?'));
-
-    process.stdin.on('data', function(data){
-
-        if(data.toString().replace(/\s+/, '') === 'yes')
-            bConfig['update'] = 1;
+        if(/^_/g.test(fileName))
+            sPath += '/[!_]?*.js';
         else
-            process.stdin.end();
+            sPath += '/' + fileName;
 
-        callback();
-    });
+        _BuildJs('./' + sPath, callback);
 
-    process.stdin.on('end', function(){
-        process.stdout.write('end');
     });
 }
 
-//default task
-//gulp.task(tmodjsTask);
-gulp.task(buildCssAndJs);
+// register command
+gulp.task(WatchCss);
+gulp.task(WatchJs);
+gulp.task(CompileCss);
+gulp.task(CompileJs);
 
-//编译所有的less
-gulp.task(Less);
-//编译所有的js
-gulp.task(reset);
+gulp.task(CdnImg);
+gulp.task(CdnCss);
+gulp.task(CdnJs);
 
-// register task
-gulp.task(clean);
-gulp.task(cleanUpload);
-gulp.task(cdnImg);
-gulp.task(cdnJs);
-gulp.task(minCss);
-gulp.task(compress);
-gulp.task(replaceUrl);
-gulp.task(imgIncodeBybase64);
-gulp.task(update);
-gulp.task(uploadList);
-//gulp.task(findIllegalChar);
+gulp.task(MinCss);
+gulp.task(CompressJs);
 
-// upload
-gulp.task(serverImgA);
-gulp.task(serverJsA);
-gulp.task(serverCssA);
+gulp.task(ImgIncodeBybase64);
 
-// update config
-gulp.task(updateConfig);
+gulp.task(ReplaceUrl);
+gulp.task(ReplaceJsUrl);
+gulp.task(ReplaceCssUrl);
+gulp.task(ReplaceHtmlCssUrl);
+gulp.task(ReplaceHtmlJsUrl);
 
-gulp.task('default', gulp.series('reset', 'Less', 'buildCssAndJs'));
+gulp.task(MoveHtml);
+gulp.task(Clean);
+/*
+ * dev for gulp
+ * 启动之后会
+ * 1, common下面的文件生成到dest对应的目录下，js > js; css > css
+ * 2, 将src下面的文件统一生成到dest对应的目录下，js > js; css > css
+ * */
+gulp.task('default', gulp.series('CompileJs', 'WatchJs', 'CompileCss', 'WatchCss'));
 
-gulp.task('compile', gulp.series('reset', 'Less'));
+gulp.task('build', gulp.series('Clean', 'MoveHtml', 'CdnImg','CompileCss', 'ImgIncodeBybase64', 'ReplaceUrl', 'MinCss', 'CdnCss',
+    'CompileJs', 'CompressJs', 'CdnJs', 'ReplaceJsUrl', 'ReplaceCssUrl', 'ReplaceHtmlCssUrl', 'ReplaceHtmlJsUrl'));
 
-// build
-gulp.task('build', gulp.series('clean', 'cleanUpload', 'minCss', 'compress', 'cdnImg', 'imgIncodeBybase64', 'replaceUrl', 'cdnJs', 'uploadList', 'update'));
 
-// FTP deploy
-gulp.task('p', gulp.series('serverImgA','serverJsA', 'serverCssA'));
-
-/*// update config
-gulp.task('conf', gulp.series('updateConfig'));
-
-// public
-gulp.task('prod', gulp.series('reset', 'Less', 'build', 'p', 'conf'));*/
